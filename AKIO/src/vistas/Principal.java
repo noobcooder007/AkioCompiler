@@ -9,6 +9,7 @@ import clases.Lexer;
 import clases.Functions;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
+import vistas.About;
 
 /**
  *
@@ -23,6 +24,8 @@ public class Principal extends javax.swing.JFrame {
     private int contadorNuevo = 0;
     public static boolean creoNuevo = false;
     public static boolean abrioArchivo = false;
+    public static boolean guardado = false;
+    About about;
 
     /**
      * Creates new form Principal
@@ -69,7 +72,7 @@ public class Principal extends javax.swing.JFrame {
         btnOpen = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         btnRun = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnAbout = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -82,8 +85,13 @@ public class Principal extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 102));
 
@@ -164,15 +172,20 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(0, 102, 102));
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/sharp_help_white_18dp 18x18.png"))); // NOI18N
-        jButton5.setToolTipText("ABOUT");
-        jButton5.setBorderPainted(false);
-        jButton5.setContentAreaFilled(false);
-        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton5.setOpaque(true);
-        jButton5.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/sharp_help_white_18dp 18x18.png"))); // NOI18N
-        jButton5.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/sharp_help_white_18dp 36x36.png"))); // NOI18N
+        btnAbout.setBackground(new java.awt.Color(0, 102, 102));
+        btnAbout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/sharp_help_white_18dp 18x18.png"))); // NOI18N
+        btnAbout.setToolTipText("ABOUT");
+        btnAbout.setBorderPainted(false);
+        btnAbout.setContentAreaFilled(false);
+        btnAbout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAbout.setOpaque(true);
+        btnAbout.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/sharp_help_white_18dp 18x18.png"))); // NOI18N
+        btnAbout.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/sharp_help_white_18dp 36x36.png"))); // NOI18N
+        btnAbout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAboutActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -192,7 +205,7 @@ public class Principal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRun, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 872, Short.MAX_VALUE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnAbout, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -203,7 +216,7 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(btnOpen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRun, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnAbout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -227,31 +240,41 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRunActionPerformed
         Compile();
+        btnSave.doClick();
     }//GEN-LAST:event_btnRunActionPerformed
 
     private void txtPanCodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPanCodeKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_F6) {
             Compile();
+            btnSave.doClick();
         }
+        guardado = false;
+        creoNuevo = true;
+        abrioArchivo = false;
+        btnSave.setEnabled(true);
     }//GEN-LAST:event_txtPanCodeKeyReleased
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         if (txtPanCode.getText() != null) {
             if (JOptionPane.showConfirmDialog(null, "Deseas guardar el archivo") == JOptionPane.YES_OPTION) {
                 new Functions().CrearFicheroNuevo(this, this.txtPanCode.getText(), "");
-                abrioArchivo = true;
+                abrioArchivo = false;
+                guardado = true;
+            } else {
+                creoNuevo = true;
+                guardado = false;
             }
         }
         else {
             abrioArchivo = false;
+            guardado = false;
         }
         contadorNuevo++;
         txtPanCode.requestFocus();
-        creoNuevo = true;
+        //creoNuevo = true;
         System.out.println(txtPanCode.isEditable());
         ClearOutput();
         ClearInput();
-
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
@@ -262,15 +285,36 @@ public class Principal extends javax.swing.JFrame {
         if (abrioArchivo) {
             System.out.println("Existente");
             new Functions().GuardarFichero(this.txtPanCode.getText(), "");
+            guardado = true;
         }
         if (creoNuevo) {
             System.out.println("Nuevo");
             new Functions().CrearFicheroNuevo(this, this.txtPanCode.getText(), "");
+            guardado = true;
         }
-        if (!creoNuevo && !abrioArchivo) {
-            JOptionPane.showMessageDialog(null, "Debes crear o abrir un archvo para poder guardarlo");
-        }
+        btnSave.setEnabled(false);
+        
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAboutActionPerformed
+        about = new About(this);
+        about.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnAboutActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        if (!guardado) {
+            if (JOptionPane.showConfirmDialog(null, "No se guardaran los cambios hechos, ¿Deseas guardar?\n"
+                    + "Perderas todo tu trabajo... y puede que sea mucho") == JOptionPane.YES_OPTION) {
+                creoNuevo = true;
+                btnSave.doClick();
+            } else {
+                System.exit(0);
+            }
+        } else {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -308,11 +352,11 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAbout;
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnOpen;
     private javax.swing.JButton btnRun;
     private javax.swing.JButton btnSave;
-    private javax.swing.JButton jButton5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

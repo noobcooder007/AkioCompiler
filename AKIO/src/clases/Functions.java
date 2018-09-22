@@ -56,6 +56,7 @@ public class Functions {
                     leeArchivo.close();
                     this.principal.abrioArchivo = true;
                     this.principal.creoNuevo = false;
+                    this.principal.guardado = true;
                 } else {
                     System.out.println("Fichero No Existe");
                 }
