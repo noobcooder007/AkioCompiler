@@ -8,6 +8,7 @@ package vistas;
 import clases.Lexer;
 import clases.Functions;
 import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import vistas.About;
 
@@ -34,6 +35,7 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Akio");
+        this.setIconImage(new ImageIcon(getClass().getResource("/icons/akio_icon.png")).getImage());
     }
 
     private void Compile() {
