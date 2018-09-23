@@ -7,10 +7,12 @@ package vistas;
 
 import clases.Lexer;
 import clases.Functions;
+import clases.Token;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import vistas.About;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,7 +20,11 @@ import vistas.About;
  */
 public class Principal extends javax.swing.JFrame {
 
-    Lexer lexer = new Lexer();
+    ArrayList<Token> object = new ArrayList<Token>();
+    Token token = new Token(null, null, null, null);
+    Lexer lexer = new Lexer(object, token);
+    About about;
+    Functions func = new Functions();
     String lexico;
     private int x, y;
     private boolean minimiza = false;
@@ -26,7 +32,7 @@ public class Principal extends javax.swing.JFrame {
     public static boolean creoNuevo = false;
     public static boolean abrioArchivo = false;
     public static boolean guardado = false;
-    About about;
+    
 
     /**
      * Creates new form Principal
@@ -243,6 +249,7 @@ public class Principal extends javax.swing.JFrame {
     private void btnRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRunActionPerformed
         Compile();
         btnSave.doClick();
+        btnSave.setEnabled(true);
     }//GEN-LAST:event_btnRunActionPerformed
 
     private void txtPanCodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPanCodeKeyReleased
@@ -259,7 +266,7 @@ public class Principal extends javax.swing.JFrame {
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         if (txtPanCode.getText() != null) {
             if (JOptionPane.showConfirmDialog(null, "Deseas guardar el archivo") == JOptionPane.YES_OPTION) {
-                new Functions().CrearFicheroNuevo(this, this.txtPanCode.getText(), "");
+                func.CrearFicheroNuevo(this, this.txtPanCode.getText(), "");
                 abrioArchivo = false;
                 guardado = true;
             } else {
@@ -286,12 +293,12 @@ public class Principal extends javax.swing.JFrame {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         if (abrioArchivo) {
             System.out.println("Existente");
-            new Functions().GuardarFichero(this.txtPanCode.getText(), "");
+            func.GuardarFichero(this.txtPanCode.getText(), "");
             guardado = true;
         }
         if (creoNuevo) {
             System.out.println("Nuevo");
-            new Functions().CrearFicheroNuevo(this, this.txtPanCode.getText(), "");
+            func.CrearFicheroNuevo(this, this.txtPanCode.getText(), "");
             guardado = true;
         }
         btnSave.setEnabled(false);
