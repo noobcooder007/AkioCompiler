@@ -14,16 +14,14 @@ import java.util.ArrayList;
  * @author charg
  */
 public class Lexer {
-    
-    Token token;
+
     ArrayList<Token> object;
     String parse = "";
     String patron = ("(setup|main|Akio|text|int|dou|bol|true|false|var|print|scan|type|case|if|not|for|switch|break|nul)\\b"
             + "|([&|||!])|([<|>])|([+|-|*|/|^|%])|([_|=|,|:|?])|([{|}|(|)])|(@[a-zA-Z0-9]+)|(#[^#|\n]+)|('[^']+')|([0-9]+)");
     Pattern p = Pattern.compile(patron);
 
-    public Lexer(ArrayList object, Token token) {
-        this.token=token;
+    public Lexer(ArrayList object) {
         this.object = object;
     }
 
@@ -104,8 +102,11 @@ public class Lexer {
             }
 
         }
-        if (cont > 0) return parse.substring(0, parse.length()-1);
-        else return "";
+        if (cont > 0) {
+            return parse.substring(0, parse.length() - 1);
+        } else {
+            return "";
+        }
     }
 
     public void setParse(String parse) {

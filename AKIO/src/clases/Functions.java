@@ -76,9 +76,9 @@ public class Functions {
         accion.setFileFilter(filtroImagen);
         accion.setDialogTitle("Guardar archivo " + nombre);
         accion.setSelectedFile(new File(nombre));
-        if (accion.getSelectedFile().exists()) {
-
-        }
+//        if (accion.getSelectedFile().exists()) {
+//
+//        }
         if (accion.showSaveDialog(principal) == JFileChooser.APPROVE_OPTION) {
             ruta = accion.getSelectedFile().toString();
             archivo = new File(ruta);
@@ -103,6 +103,7 @@ public class Functions {
 
                 this.principal.abrioArchivo = true;
                 this.principal.creoNuevo = false;
+                this.principal.guardado = true;
             } catch (Exception ex) {
             }
         }
@@ -125,6 +126,7 @@ public class Functions {
             buffer.close();
             wr.close();
             escribirArchivo.close();
+            this.principal.guardado = true;
         } catch (Exception ex) {
             //Captura un posible error le imprime en pantalla 
             System.out.println(ex.getMessage());

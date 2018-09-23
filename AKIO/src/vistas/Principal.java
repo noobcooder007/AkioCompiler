@@ -11,7 +11,6 @@ import clases.Token;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import vistas.About;
 import java.util.ArrayList;
 
 /**
@@ -20,9 +19,8 @@ import java.util.ArrayList;
  */
 public class Principal extends javax.swing.JFrame {
 
-    ArrayList<Token> object = new ArrayList<Token>();
-    Token token = new Token(null, null, null, null);
-    Lexer lexer = new Lexer(object, token);
+    ArrayList<Token> object = new ArrayList<>();
+    Lexer lexer = new Lexer(object);
     About about;
     Functions func = new Functions();
     String lexico;
@@ -32,7 +30,6 @@ public class Principal extends javax.swing.JFrame {
     public static boolean creoNuevo = false;
     public static boolean abrioArchivo = false;
     public static boolean guardado = false;
-    
 
     /**
      * Creates new form Principal
@@ -273,8 +270,7 @@ public class Principal extends javax.swing.JFrame {
                 creoNuevo = true;
                 guardado = false;
             }
-        }
-        else {
+        } else {
             abrioArchivo = false;
             guardado = false;
         }
@@ -294,15 +290,15 @@ public class Principal extends javax.swing.JFrame {
         if (abrioArchivo) {
             System.out.println("Existente");
             func.GuardarFichero(this.txtPanCode.getText(), "");
-            guardado = true;
         }
         if (creoNuevo) {
             System.out.println("Nuevo");
             func.CrearFicheroNuevo(this, this.txtPanCode.getText(), "");
-            guardado = true;
         }
-        btnSave.setEnabled(false);
-        
+        if (guardado) {
+            btnSave.setEnabled(false);
+        }
+
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAboutActionPerformed
