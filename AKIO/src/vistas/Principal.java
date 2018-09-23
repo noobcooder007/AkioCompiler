@@ -21,8 +21,11 @@ public class Principal extends javax.swing.JFrame {
 
     ArrayList<Token> object = new ArrayList<>();
     Lexer lexer = new Lexer(object);
-    About about;
+    About about = new About(this);
     Functions func = new Functions();
+    TableOfSimbols simbols = new TableOfSimbols(this);
+    ResultSetTable rsTable = new ResultSetTable(this);
+    
     String lexico;
     private int x, y;
     private boolean minimiza = false;
@@ -45,6 +48,7 @@ public class Principal extends javax.swing.JFrame {
         ClearOutput();
         lexico = lexer.compile(txtPanCode.getText());
         txtPanResul.setText(lexico);
+        rsTable.setVisible(true);
     }
 
     private void ClearOutput() {
@@ -78,6 +82,7 @@ public class Principal extends javax.swing.JFrame {
         btnSave = new javax.swing.JButton();
         btnRun = new javax.swing.JButton();
         btnAbout = new javax.swing.JButton();
+        btnTableofSimbols = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -192,6 +197,18 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        btnTableofSimbols.setBackground(new java.awt.Color(0, 102, 102));
+        btnTableofSimbols.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/outline_table_chart_white_18dp 18x18.png"))); // NOI18N
+        btnTableofSimbols.setContentAreaFilled(false);
+        btnTableofSimbols.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTableofSimbols.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/outline_table_chart_white_18dp 18x18.png"))); // NOI18N
+        btnTableofSimbols.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/outline_table_chart_white_18dp 36x36.png"))); // NOI18N
+        btnTableofSimbols.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTableofSimbolsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -209,20 +226,24 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRun, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 872, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 829, Short.MAX_VALUE)
+                        .addComponent(btnTableofSimbols, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAbout, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnNew, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnOpen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRun, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAbout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAbout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnTableofSimbols, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -302,7 +323,6 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAboutActionPerformed
-        about = new About(this);
         about.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnAboutActionPerformed
@@ -320,6 +340,11 @@ public class Principal extends javax.swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_formWindowClosing
+
+    private void btnTableofSimbolsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTableofSimbolsActionPerformed
+        simbols.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnTableofSimbolsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -362,6 +387,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnOpen;
     private javax.swing.JButton btnRun;
     private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnTableofSimbols;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
