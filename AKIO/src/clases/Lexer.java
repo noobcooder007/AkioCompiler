@@ -7,30 +7,37 @@ package clases;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.ArrayList;
 
 /**
  *
  * @author charg
  */
 public class Lexer {
-
+    
+    Token token;
+    ArrayList<Token> object;
     String parse = "";
     String patron = ("(setup|main|Akio|text|int|dou|bol|true|false|var|print|scan|type|case|if|not|for|switch|break|nul)\\b"
             + "|([&|||!])|([<|>])|([+|-|*|/|^|%])|([_|=|,|:|?])|([{|}|(|)])|(@[a-zA-Z0-9]+)|(#[^#|\n]+)|('[^']+')|([0-9]+)");
     Pattern p = Pattern.compile(patron);
 
-    public Lexer() {
+    public Lexer(ArrayList object, Token token) {
+        this.token=token;
+        this.object = object;
     }
 
     public String compile(String code) {
-        int pr = 1, ol = 1, or = 1, oa = 1, sp = 1, sa = 1, var = 1, com = 1, wd = 1, num = 1, cont = 0;
+        //int pr = 1, ol = 1, or = 1, oa = 1, sp = 1, sa = 1, var = 1, com = 1, wd = 1, num = 1;
+        int cont = 0;
         //code = code.replaceAll("\\s", "");
         Matcher m = p.matcher(code);
         while (m.find()) {
             if (m.group(1) != null) {
                 //parse = parse + "PR" + String.valueOf(pr) + ",";
                 parse += m.toMatchResult().group(0) + " ";
-                pr++;
+                System.out.println(m.start() + ", " + m.start(1) + ", " + m.end() + ", " + m.end(0) + ", " + m.group() + ", " + m.group(0) + ", " + m.groupCount());
+                //pr++;
                 cont++;
                 //System.out.print(m.toMatchResult().group(0));
                 System.out.println("PR ");
@@ -38,61 +45,61 @@ public class Lexer {
             if (m.group(2) != null) {
                 //parse = parse + "OL" + String.valueOf(ol) + ",";
                 parse += m.toMatchResult().group(0) + " ";
-                ol++;
+                //ol++;
                 cont++;
                 //System.out.print(m.toMatchResult().group(0));
             }
             if (m.group(3) != null) {
                 //parse = parse + "OR" + String.valueOf(or) + ",";
                 parse += m.toMatchResult().group(0) + " ";
-                or++;
+                //or++;
                 cont++;
                 //System.out.print(m.toMatchResult().group(0));
             }
             if (m.group(4) != null) {
                 //parse = parse + "OA" + String.valueOf(oa) + ",";
                 parse += m.toMatchResult().group(0) + " ";
-                oa++;
+                //oa++;
                 cont++;
                 //System.out.print(m.toMatchResult().group(0));
             }
             if (m.group(5) != null) {
                 //parse = parse + "SP" + String.valueOf(sp) + ",";
                 parse += m.toMatchResult().group(0) + " ";
-                sp++;
+                //sp++;
                 cont++;
                 //System.out.print(m.toMatchResult().group(0));
             }
             if (m.group(6) != null) {
                 //parse = parse + "SA" + String.valueOf(sa) + ",";
                 parse += m.toMatchResult().group(0) + " ";
-                sa++;
+                //sa++;
                 cont++;
                 //System.out.print(m.toMatchResult().group(0));
             }
             if (m.group(7) != null) {
                 //parse = parse + "VAR" + String.valueOf(var) + ",";
                 parse += m.toMatchResult().group(0) + " ";
-                var++;
+                //var++;
                 cont++;
                 //System.out.print(m.toMatchResult().group(0));
             }
             if (m.group(8) != null) {
                 //parse = parse + "COM" + String.valueOf(com) + ",";
-                com++;
+                //com++;
                 cont++;
                 //System.out.print(m.toMatchResult().group(0));
                 System.out.println("COM");
             }
             if (m.group(9) != null) {
                 parse += m.toMatchResult().group(0) + " ";
-                wd++;
+                //wd++;
                 cont++;
                 System.out.println("WD ");
             }
             if (m.group(10) != null) {
                 parse += m.toMatchResult().group(0) + " ";
-                num++;
+                //num++;
                 cont++;
             }
 
