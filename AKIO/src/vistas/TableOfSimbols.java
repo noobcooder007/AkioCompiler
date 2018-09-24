@@ -5,6 +5,7 @@
  */
 package vistas;
 
+import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
 /**
@@ -28,6 +29,11 @@ public class TableOfSimbols extends javax.swing.JFrame {
     private TableOfSimbols() {
         
     }
+    
+    private void Exit() {
+        principal.setVisible(true);
+        this.setVisible(false);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,6 +50,11 @@ public class TableOfSimbols extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
+            }
+        });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                formKeyReleased(evt);
             }
         });
 
@@ -75,9 +86,14 @@ public class TableOfSimbols extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        principal.setVisible(true);
-        this.setVisible(false);
+        Exit();
     }//GEN-LAST:event_formWindowClosing
+
+    private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            Exit();
+        }
+    }//GEN-LAST:event_formKeyReleased
 
     /**
      * @param args the command line arguments

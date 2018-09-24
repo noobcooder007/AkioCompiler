@@ -25,7 +25,7 @@ public class Principal extends javax.swing.JFrame {
     Functions func = new Functions();
     TableOfSimbols simbols = new TableOfSimbols(this);
     ResultSetTable rsTable = new ResultSetTable(this);
-    
+
     String lexico;
     private int x, y;
     private boolean minimiza = false;
@@ -42,12 +42,14 @@ public class Principal extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("Akio");
         this.setIconImage(new ImageIcon(getClass().getResource("/icons/akio_icon.png")).getImage());
+        creoNuevo = true;
     }
 
     private void Compile() {
         ClearOutput();
         lexico = lexer.compile(txtPanCode.getText());
         txtPanResul.setText(lexico);
+        this.setVisible(false);
         rsTable.setVisible(true);
     }
 
@@ -58,6 +60,18 @@ public class Principal extends javax.swing.JFrame {
 
     private void ClearInput() {
         txtPanCode.setText("");
+    }
+
+    public void SaveCurrentCode() {
+        if (abrioArchivo) {
+            func.GuardarFichero(this.txtPanCode.getText(), "");
+        }
+        if (creoNuevo) {
+            func.CrearFicheroNuevo(this, this.txtPanCode.getText(), "");
+        }
+        if (guardado) {
+            btnSave.setEnabled(false);
+        }
     }
 
     /**
@@ -266,7 +280,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRunActionPerformed
         Compile();
-        btnSave.doClick();
+        //btnSave.doClick();
         btnSave.setEnabled(true);
     }//GEN-LAST:event_btnRunActionPerformed
 
@@ -297,29 +311,16 @@ public class Principal extends javax.swing.JFrame {
         }
         contadorNuevo++;
         txtPanCode.requestFocus();
-        //creoNuevo = true;
-        System.out.println(txtPanCode.isEditable());
         ClearOutput();
         ClearInput();
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
-        new Functions().LeerFichero(this);
+        func.LeerFichero(this);
     }//GEN-LAST:event_btnOpenActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        if (abrioArchivo) {
-            System.out.println("Existente");
-            func.GuardarFichero(this.txtPanCode.getText(), "");
-        }
-        if (creoNuevo) {
-            System.out.println("Nuevo");
-            func.CrearFicheroNuevo(this, this.txtPanCode.getText(), "");
-        }
-        if (guardado) {
-            btnSave.setEnabled(false);
-        }
-
+        SaveCurrentCode();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAboutActionPerformed

@@ -5,6 +5,7 @@
  */
 package vistas;
 
+import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
 /**
@@ -23,10 +24,16 @@ public class About extends javax.swing.JFrame {
         this.principal = principal;
         this.setLocationRelativeTo(null);
         this.setIconImage(new ImageIcon(getClass().getResource("/icons/akio_icon.png")).getImage());
+        jPanel1.requestFocus();
     }
 
     private About() {
         
+    }
+    
+    private void Exit() {
+        principal.setVisible(true);
+        this.setVisible(false);
     }
 
     /**
@@ -59,6 +66,11 @@ public class About extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 102));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jPanel1KeyReleased(evt);
+            }
+        });
 
         jLabel2.setBackground(new java.awt.Color(0, 102, 102));
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/akio_icon.png"))); // NOI18N
@@ -89,7 +101,6 @@ public class About extends javax.swing.JFrame {
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/outline_arrow_back_white_18dp 18x18.png"))); // NOI18N
         jButton1.setToolTipText("Atras");
         jButton1.setContentAreaFilled(false);
-        jButton1.setOpaque(false);
         jButton1.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/outline_arrow_back_white_18dp 18x18.png"))); // NOI18N
         jButton1.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/outline_arrow_back_white_18dp 36x36.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -143,14 +154,18 @@ public class About extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        principal.setVisible(true);
-        this.setVisible(false);
+        Exit();
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        principal.setVisible(true);
-        this.setVisible(false);
+        Exit();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jPanel1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel1KeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            Exit();
+        }
+    }//GEN-LAST:event_jPanel1KeyReleased
 
     /**
      * @param args the command line arguments

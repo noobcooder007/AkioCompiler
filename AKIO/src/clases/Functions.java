@@ -28,7 +28,6 @@ public class Functions {
 
     public void LeerFichero(Principal principal) {
         this.principal = principal;
-
         accion = new JFileChooser();
         accion.setFileSelectionMode(0);
         FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("AK", "ak");
@@ -57,28 +56,22 @@ public class Functions {
                     this.principal.abrioArchivo = true;
                     this.principal.creoNuevo = false;
                     this.principal.guardado = true;
-                } else {
-                    System.out.println("Fichero No Existe");
                 }
             } catch (Exception ex) {
                 /*Captura un posible error y le imprime en pantalla*/
-                System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, ex.getMessage());
             }
         }
     }
 
     public void CrearFicheroNuevo(Principal principal, String SCadena, String nombre) {
         this.principal = principal;
-
         accion = new JFileChooser();
         accion.setFileSelectionMode(0);
         FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("AK", "ak");
         accion.setFileFilter(filtroImagen);
         accion.setDialogTitle("Guardar archivo " + nombre);
         accion.setSelectedFile(new File(nombre));
-//        if (accion.getSelectedFile().exists()) {
-//
-//        }
         if (accion.showSaveDialog(principal) == JFileChooser.APPROVE_OPTION) {
             ruta = accion.getSelectedFile().toString();
             archivo = new File(ruta);
@@ -89,7 +82,7 @@ public class Functions {
                         archivo.delete();
                     } else {
                         JOptionPane.showMessageDialog(null, "Estuvo cerca");
-                        archivo = new File(ruta.substring(0, ruta.length()-3) + " - copia.ak");
+                        archivo = new File(ruta.substring(0, ruta.length() - 3) + " - copia.ak");
                     }
                 }
                 BufferedWriter wr = new BufferedWriter(new FileWriter(archivo));
@@ -110,8 +103,6 @@ public class Functions {
     }
 
     public void GuardarFichero(String SCadena, String nombre) {
-
-        System.out.println(ruta);
         archivo = new File(ruta);
         try {
             //Si Existe el fichero lo borra
@@ -129,7 +120,7 @@ public class Functions {
             this.principal.guardado = true;
         } catch (Exception ex) {
             //Captura un posible error le imprime en pantalla 
-            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
 
