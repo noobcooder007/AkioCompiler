@@ -49,8 +49,8 @@ public class Principal extends javax.swing.JFrame {
         ClearOutput();
         lexico = lexer.compile(txtPanCode.getText());
         txtPanResul.setText(lexico);
-        this.setVisible(false);
-        rsTable.setVisible(true);
+        //this.setVisible(false);
+        //rsTable.setVisible(true);
     }
 
     private void ClearOutput() {
@@ -280,7 +280,6 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRunActionPerformed
         Compile();
-        //btnSave.doClick();
         btnSave.setEnabled(true);
     }//GEN-LAST:event_btnRunActionPerformed
 
