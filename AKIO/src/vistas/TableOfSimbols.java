@@ -47,8 +47,10 @@ public class TableOfSimbols extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -62,30 +64,33 @@ public class TableOfSimbols extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 102));
 
+        jTable1.setBackground(new java.awt.Color(0, 130, 130));
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTable1.setForeground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"Akio", "PR", "PR01"},
-                {"Setup", "PR", "PR02"},
-                {"Main", "PR", "PR03"},
-                {"Text", "PR", "PR04"},
-                {"Int", "PR", "PR05"},
-                {"Dou", "PR", "PR06"},
-                {"Bol", "PR", "PR07"},
-                {"True", "PR", "PR08"},
-                {"False", "PR", "PR09"},
-                {"Var", "PR", "PR010"},
-                {"Print", "PR", "PR011"},
-                {"Scan", "PR", "PR012"},
-                {"Type", "PR", "PR013"},
-                {"Case", "PR", "PR014"},
-                {"If", "PR", "PR015"},
-                {"Not	", "PR", "PR016"},
-                {"For	", "PR", "PR017"},
-                {"Switch", "PR", "PR018"},
-                {"Break", "PR", "PR019"},
-                {"Null", "PR", "PR020"},
-                {" &", "OL", "OL01"},
-                {"", "OL", "OL02"},
+                {"setup", "PR", "PR02"},
+                {"main", "PR", "PR03"},
+                {"text", "PR", "PR04"},
+                {"int", "PR", "PR05"},
+                {"dou", "PR", "PR06"},
+                {"bol", "PR", "PR07"},
+                {"true", "PR", "PR08"},
+                {"false", "PR", "PR09"},
+                {"var", "PR", "PR10"},
+                {"print", "PR", "PR11"},
+                {"scan", "PR", "PR12"},
+                {"type", "PR", "PR13"},
+                {"case", "PR", "PR14"},
+                {"if", "PR", "PR15"},
+                {"not	", "PR", "PR16"},
+                {"for	", "PR", "PR17"},
+                {"switch", "PR", "PR18"},
+                {"break", "PR", "PR19"},
+                {"nul", "PR", "PR20"},
+                {"  &", "OL", "OL01"},
+                {"  |", "OL", "OL02"},
                 {"  !", "OL", "OL03"},
                 {" < ", "OR", "OR01"},
                 {" > ", "OR", "OR02"},
@@ -106,13 +111,13 @@ public class TableOfSimbols extends javax.swing.JFrame {
                 {" }", "SA", "SA02"},
                 {" (", "SA", "SA03"},
                 {" )", "SA", "SA04"},
-                {"@[a-2ª-Z09]", "VAR", "VARN"},
-                {"#[^#//n]", "COM", "COMn"},
-                {" ‘[^’]’	", "PAL", "PALn"},
-                {" [09]", "NUM", "NUMn"}
+                {"@[a-zA-Z0-9]", "VAR", "VARn"},
+                {"#[^#|\n]", "COM", "COMn"},
+                {" '[^']'", "PAL", "PALn"},
+                {" [0-9]", "NUM", "NUMn"}
             },
             new String [] {
-                "Token", "Lexema", "Alias"
+                "TOKEN", "LEXEMA", "ALIAS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -125,21 +130,32 @@ public class TableOfSimbols extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("TABLA DE SIMBOLOS");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(188, 188, 188)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
+                .addGap(191, 191, 191))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addGap(24, 24, 24))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -150,7 +166,9 @@ public class TableOfSimbols extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 487, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -202,6 +220,7 @@ public class TableOfSimbols extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

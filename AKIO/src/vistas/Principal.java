@@ -19,12 +19,12 @@ import java.util.ArrayList;
  */
 public class Principal extends javax.swing.JFrame {
 
-    ArrayList<Token> object = new ArrayList<>();
-    Lexer lexer = new Lexer(object);
+    public ArrayList<Token> object = new ArrayList<>();
+    Lexer lexer = new Lexer(this);
     About about = new About(this);
     Functions func = new Functions();
     TableOfSimbols simbols = new TableOfSimbols(this);
-    ResultSetTable rsTable = new ResultSetTable(this);
+    ResultSetTable rsTable;
 
     String lexico;
     private int x, y;
@@ -49,6 +49,10 @@ public class Principal extends javax.swing.JFrame {
         ClearOutput();
         lexico = lexer.compile(txtPanCode.getText());
         txtPanResul.setText(lexico);
+        rsTable = new ResultSetTable(this);
+        for (int i = 0; i < object.size(); i++) {
+            object.remove(i);
+        }
         this.setVisible(false);
         rsTable.setVisible(true);
     }
@@ -198,7 +202,7 @@ public class Principal extends javax.swing.JFrame {
 
         btnAbout.setBackground(new java.awt.Color(0, 102, 102));
         btnAbout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/sharp_help_white_18dp 18x18.png"))); // NOI18N
-        btnAbout.setToolTipText("ABOUT");
+        btnAbout.setToolTipText("ACERCA DE");
         btnAbout.setBorderPainted(false);
         btnAbout.setContentAreaFilled(false);
         btnAbout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -213,6 +217,7 @@ public class Principal extends javax.swing.JFrame {
 
         btnTableofSimbols.setBackground(new java.awt.Color(0, 102, 102));
         btnTableofSimbols.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/outline_table_chart_white_18dp 18x18.png"))); // NOI18N
+        btnTableofSimbols.setToolTipText("TABLA DE SIMBOLOS");
         btnTableofSimbols.setContentAreaFilled(false);
         btnTableofSimbols.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnTableofSimbols.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/outline_table_chart_white_18dp 18x18.png"))); // NOI18N
@@ -366,14 +371,10 @@ public class Principal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
-        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Principal().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Principal().setVisible(true);
         });
     }
 

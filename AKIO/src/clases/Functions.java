@@ -80,6 +80,7 @@ public class Functions {
                 if (archivo.exists()) {
                     if (JOptionPane.showConfirmDialog(null, "Se sobreescribira el archivo") == JOptionPane.YES_OPTION) {
                         archivo.delete();
+                        archivo = new File(ruta);
                     } else {
                         JOptionPane.showMessageDialog(null, "Estuvo cerca");
                         archivo = new File(ruta.substring(0, ruta.length() - 3) + " - copia.ak");
@@ -103,7 +104,8 @@ public class Functions {
     }
 
     public void GuardarFichero(String SCadena, String nombre) {
-        archivo = new File(ruta);
+        archivo = new File(ruta + ".ak");
+        System.out.println(ruta);
         try {
             //Si Existe el fichero lo borra
             if (archivo.exists()) {
