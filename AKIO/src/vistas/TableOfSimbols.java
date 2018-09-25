@@ -45,6 +45,8 @@ public class TableOfSimbols extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -60,26 +62,95 @@ public class TableOfSimbols extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 102));
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"Akio", "PR", "PR01"},
+                {"Setup", "PR", "PR02"},
+                {"Main", "PR", "PR03"},
+                {"Text", "PR", "PR04"},
+                {"Int", "PR", "PR05"},
+                {"Dou", "PR", "PR06"},
+                {"Bol", "PR", "PR07"},
+                {"True", "PR", "PR08"},
+                {"False", "PR", "PR09"},
+                {"Var", "PR", "PR010"},
+                {"Print", "PR", "PR011"},
+                {"Scan", "PR", "PR012"},
+                {"Type", "PR", "PR013"},
+                {"Case", "PR", "PR014"},
+                {"If", "PR", "PR015"},
+                {"Not	", "PR", "PR016"},
+                {"For	", "PR", "PR017"},
+                {"Switch", "PR", "PR018"},
+                {"Break", "PR", "PR019"},
+                {"Null", "PR", "PR020"},
+                {" &", "OL", "OL01"},
+                {"", "OL", "OL02"},
+                {"  !", "OL", "OL03"},
+                {" < ", "OR", "OR01"},
+                {" > ", "OR", "OR02"},
+                {" +", "OA", "OA01"},
+                {" -", "OA", "OA02"},
+                {" *", "OA", "OA03"},
+                {" /", "OA", "OA04"},
+                {" ^", "OA", "OA05"},
+                {" %", "OA", "OA06"},
+                {" _", "SP", "SP01"},
+                {" =", "SP", "SP02"},
+                {" ?", "SP", "SP03"},
+                {" :", "SP", "SP04"},
+                {" ;", "SP", "SP04"},
+                {" @", "SP", "SP05"},
+                {" #", "SP", "SP06"},
+                {" {", "SA", "SA01"},
+                {" }", "SA", "SA02"},
+                {" (", "SA", "SA03"},
+                {" )", "SA", "SA04"},
+                {"@[a-2ª-Z09]", "VAR", "VARN"},
+                {"#[^#//n]", "COM", "COMn"},
+                {" ‘[^’]’	", "PAL", "PALn"},
+                {" [09]", "NUM", "NUMn"}
+            },
+            new String [] {
+                "Token", "Lexema", "Alias"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 900, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(130, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -132,5 +203,7 @@ public class TableOfSimbols extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

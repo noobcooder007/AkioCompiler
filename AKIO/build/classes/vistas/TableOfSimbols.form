@@ -27,12 +27,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -47,15 +47,208 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="900" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="130" max="32767" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="500" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="52" max="32767" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
       </Layout>
+      <SubComponents>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTable" name="jTable1">
+              <Properties>
+                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                  <Table columnCount="3" rowCount="46">
+                    <Column editable="false" title="Token" type="java.lang.Object">
+                      <Data value="Akio"/>
+                      <Data value="Setup"/>
+                      <Data value="Main"/>
+                      <Data value="Text"/>
+                      <Data value="Int"/>
+                      <Data value="Dou"/>
+                      <Data value="Bol"/>
+                      <Data value="True"/>
+                      <Data value="False"/>
+                      <Data value="Var"/>
+                      <Data value="Print"/>
+                      <Data value="Scan"/>
+                      <Data value="Type"/>
+                      <Data value="Case"/>
+                      <Data value="If"/>
+                      <Data value="Not&#x9;"/>
+                      <Data value="For&#x9;"/>
+                      <Data value="Switch"/>
+                      <Data value="Break"/>
+                      <Data value="Null"/>
+                      <Data value=" &amp;"/>
+                      <Data value=""/>
+                      <Data value="  !"/>
+                      <Data value=" &lt; "/>
+                      <Data value=" &gt; "/>
+                      <Data value=" +"/>
+                      <Data value=" -"/>
+                      <Data value=" *"/>
+                      <Data value=" /"/>
+                      <Data value=" ^"/>
+                      <Data value=" %"/>
+                      <Data value=" _"/>
+                      <Data value=" ="/>
+                      <Data value=" ?"/>
+                      <Data value=" :"/>
+                      <Data value=" ;"/>
+                      <Data value=" @"/>
+                      <Data value=" #"/>
+                      <Data value=" {"/>
+                      <Data value=" }"/>
+                      <Data value=" ("/>
+                      <Data value=" )"/>
+                      <Data value="@[a-2&#xaa;-Z09]"/>
+                      <Data value="#[^#//n]"/>
+                      <Data value=" &#x2018;[^&#x2019;]&#x2019;&#x9;"/>
+                      <Data value=" [09]"/>
+                    </Column>
+                    <Column editable="false" title="Lexema" type="java.lang.Object">
+                      <Data value="PR"/>
+                      <Data value="PR"/>
+                      <Data value="PR"/>
+                      <Data value="PR"/>
+                      <Data value="PR"/>
+                      <Data value="PR"/>
+                      <Data value="PR"/>
+                      <Data value="PR"/>
+                      <Data value="PR"/>
+                      <Data value="PR"/>
+                      <Data value="PR"/>
+                      <Data value="PR"/>
+                      <Data value="PR"/>
+                      <Data value="PR"/>
+                      <Data value="PR"/>
+                      <Data value="PR"/>
+                      <Data value="PR"/>
+                      <Data value="PR"/>
+                      <Data value="PR"/>
+                      <Data value="PR"/>
+                      <Data value="OL"/>
+                      <Data value="OL"/>
+                      <Data value="OL"/>
+                      <Data value="OR"/>
+                      <Data value="OR"/>
+                      <Data value="OA"/>
+                      <Data value="OA"/>
+                      <Data value="OA"/>
+                      <Data value="OA"/>
+                      <Data value="OA"/>
+                      <Data value="OA"/>
+                      <Data value="SP"/>
+                      <Data value="SP"/>
+                      <Data value="SP"/>
+                      <Data value="SP"/>
+                      <Data value="SP"/>
+                      <Data value="SP"/>
+                      <Data value="SP"/>
+                      <Data value="SA"/>
+                      <Data value="SA"/>
+                      <Data value="SA"/>
+                      <Data value="SA"/>
+                      <Data value="VAR"/>
+                      <Data value="COM"/>
+                      <Data value="PAL"/>
+                      <Data value="NUM"/>
+                    </Column>
+                    <Column editable="false" title="Alias" type="java.lang.Object">
+                      <Data value="PR01"/>
+                      <Data value="PR02"/>
+                      <Data value="PR03"/>
+                      <Data value="PR04"/>
+                      <Data value="PR05"/>
+                      <Data value="PR06"/>
+                      <Data value="PR07"/>
+                      <Data value="PR08"/>
+                      <Data value="PR09"/>
+                      <Data value="PR010"/>
+                      <Data value="PR011"/>
+                      <Data value="PR012"/>
+                      <Data value="PR013"/>
+                      <Data value="PR014"/>
+                      <Data value="PR015"/>
+                      <Data value="PR016"/>
+                      <Data value="PR017"/>
+                      <Data value="PR018"/>
+                      <Data value="PR019"/>
+                      <Data value="PR020"/>
+                      <Data value="OL01"/>
+                      <Data value="OL02"/>
+                      <Data value="OL03"/>
+                      <Data value="OR01"/>
+                      <Data value="OR02"/>
+                      <Data value="OA01"/>
+                      <Data value="OA02"/>
+                      <Data value="OA03"/>
+                      <Data value="OA04"/>
+                      <Data value="OA05"/>
+                      <Data value="OA06"/>
+                      <Data value="SP01"/>
+                      <Data value="SP02"/>
+                      <Data value="SP03"/>
+                      <Data value="SP04"/>
+                      <Data value="SP04"/>
+                      <Data value="SP05"/>
+                      <Data value="SP06"/>
+                      <Data value="SA01"/>
+                      <Data value="SA02"/>
+                      <Data value="SA03"/>
+                      <Data value="SA04"/>
+                      <Data value="VARN"/>
+                      <Data value="COMn"/>
+                      <Data value="PALn"/>
+                      <Data value="NUMn"/>
+                    </Column>
+                  </Table>
+                </Property>
+                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                  <TableColumnModel selectionModel="0">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                  </TableColumnModel>
+                </Property>
+                <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                  <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                </Property>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+      </SubComponents>
     </Container>
   </SubComponents>
 </Form>
