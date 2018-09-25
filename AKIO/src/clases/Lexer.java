@@ -17,7 +17,7 @@ public class Lexer {
 
     ArrayList<Token> object;
     int var = 1, com = 1, wd = 1, num = 1;
-    int cont = 0, saltos = 0, chars = 0, lineChars = 0;
+    int cont = 0, saltos = 1, chars = 0, lineChars = 0;
     String alias;
     String parse = "";
     String patron = ("(setup|main|Akio|text|int|dou|bol|true|false|var|print|scan|type|case|if|not|for|switch|break|nul)\\b"
@@ -34,73 +34,73 @@ public class Lexer {
         while (m.find()) {
             if (m.group(1) != null) {
                 alias = getAlias(m.toMatchResult().group(0), 0);
-                token = new Token(m.toMatchResult().group(0), "PR", alias, "[" + saltos + "," + (m.start() - lineChars) + "]");
-                System.out.println(alias);
-                System.out.println(m.start() - lineChars);
-                //object.add(token);
+                chars = m.start() - lineChars;
+                token = new Token(m.toMatchResult().group(0), "PR", alias, "[" + saltos + "," + (chars) + "]");
+                object.add(token);
                 cont++;
+                parse += alias + " ";
             } else if (m.group(2) != null) {
                 alias = getAlias(m.toMatchResult().group(0), 1);
-                token = new Token(m.toMatchResult().group(0), "PR", alias, "[" + saltos + "," + (chars) + "]");
-                System.out.println(alias);
-                //object.add(token);
+                chars = m.start() - lineChars;
+                token = new Token(m.toMatchResult().group(0), "OL", alias, "[" + saltos + "," + (chars) + "]");
+                object.add(token);
                 cont++;
+                parse += alias + " ";
             } else if (m.group(3) != null) {
                 alias = getAlias(m.toMatchResult().group(0), 2);
-                token = new Token(m.toMatchResult().group(0), "PR", alias, "[" + saltos + "," + (chars) + "]");
-                System.out.println(alias);
-                //object.add(token);
+                chars = m.start() - lineChars;
+                token = new Token(m.toMatchResult().group(0), "OR", alias, "[" + saltos + "," + (chars) + "]");
+                object.add(token);
                 cont++;
+                parse += alias + " ";
             } else if (m.group(4) != null) {
                 alias = getAlias(m.toMatchResult().group(0), 3);
-                token = new Token(m.toMatchResult().group(0), "PR", alias, "[" + saltos + "," + (chars) + "]");
-                System.out.println(alias);
-                //object.add(token);
+                chars = m.start() - lineChars;
+                token = new Token(m.toMatchResult().group(0), "OA", alias, "[" + saltos + "," + (chars) + "]");
+                object.add(token);
                 cont++;
+                parse += alias + " ";
             } else if (m.group(5) != null) {
                 alias = getAlias(m.toMatchResult().group(0), 4);
                 if ("SP05".equals(alias)) {
-                    lineChars += m.end() + 1;
+                    lineChars = m.end() + 2;
                 }
                 chars = m.start() - lineChars;
-                token = new Token(m.toMatchResult().group(0), "PR", alias, "[" + saltos + "," + (chars) + "]");
-                System.out.println(alias);
-                //object.add(token);
+                token = new Token(m.toMatchResult().group(0), "SP", alias, "[" + saltos + "," + (chars) + "]");
+                object.add(token);
                 cont++;
+                parse += alias + " ";
             } else if (m.group(6) != null) {
                 alias = getAlias(m.toMatchResult().group(0), 5);
                 if ("SA01".equals(alias) | "SA02".equals(alias)) {
-                    lineChars += m.end() + 1;
+                    lineChars = m.end() + 2;
                 }
                 chars = m.start() - lineChars;
-                token = new Token(m.toMatchResult().group(0), "PR", alias, "[" + saltos + "," + (chars) + "]");
-                System.out.println(alias);
-                //object.add(token);
+                token = new Token(m.toMatchResult().group(0), "SA", alias, "[" + saltos + "," + (chars) + "]");
+                object.add(token);
                 cont++;
+                parse += alias + " ";
             } else if (m.group(7) != null) {
                 alias = getAlias(m.toMatchResult().group(0), 6);
-                token = new Token(m.toMatchResult().group(0), "PR", alias, "[" + saltos + "," + (chars) + "]");
-                System.out.println(alias);
-                //object.add(token);
+                chars = m.start() - lineChars;
+                token = new Token(m.toMatchResult().group(0), "VAR", alias, "[" + saltos + "," + (chars) + "]");
+                object.add(token);
                 cont++;
-            } else if (m.group(8) != null) {
-                alias = getAlias(m.toMatchResult().group(0), 7);
-                token = new Token(m.toMatchResult().group(0), "PR", alias, "[" + saltos + "," + (chars) + "]");
-                System.out.println(alias);
-                //object.add(token);
-                cont++;
+                parse += alias + " ";
             } else if (m.group(9) != null) {
                 alias = getAlias(m.toMatchResult().group(0), 8);
-                token = new Token(m.toMatchResult().group(0), "PR", alias, "[" + saltos + "," + (chars) + "]");
-                System.out.println(alias);
-                //object.add(token);
+                chars = m.start() - lineChars;
+                token = new Token(m.toMatchResult().group(0), "PAL", alias, "[" + saltos + "," + (chars) + "]");
+                object.add(token);
                 cont++;
+                parse += alias + " ";
             } else if (m.group(10) != null) {
                 alias = getAlias(m.toMatchResult().group(0), 9);
-                token = new Token(m.toMatchResult().group(0), "PR", alias, "[" + saltos + "," + (chars) + "]");
-                System.out.println(alias);
-                //object.add(token);
+                chars = m.start() - lineChars;
+                token = new Token(m.toMatchResult().group(0), "NUM", alias, "[" + saltos + "," + (chars) + "]");
+                object.add(token);
                 cont++;
+                parse += alias + " ";
             } else if (m.group(11) != null) {
                 cont++;
                 saltos++;
@@ -109,8 +109,7 @@ public class Lexer {
         }
         lineChars = 0;
         if (cont > 0) {
-            //return parse.substring(0, parse.length() - 1);
-            return "";
+            return parse.substring(0, parse.length() - 1);
         } else {
             return "";
         }
@@ -267,15 +266,15 @@ public class Lexer {
                 }
                 break;
             case 6:
-                alias = "VAR" + var;
+                alias = (var > 9) ? "VAR" + var : "VAR0" + var;
                 var++;
                 break;
             case 8:
-                alias = "PAL" + wd;
+                alias = (wd > 9) ? "PAL" + wd : "PAL0" + wd;
                 wd++;
                 break;
             case 9:
-                alias = "NUM" + num;
+                alias = (num > 9) ? "NUM" + num : "NUM0" + num;
                 num++;
                 break;
         }

@@ -49,8 +49,8 @@ public class Principal extends javax.swing.JFrame {
         ClearOutput();
         lexico = lexer.compile(txtPanCode.getText());
         txtPanResul.setText(lexico);
-        //this.setVisible(false);
-        //rsTable.setVisible(true);
+        this.setVisible(false);
+        rsTable.setVisible(true);
     }
 
     private void ClearOutput() {
