@@ -16,7 +16,7 @@ import vistas.Principal;
 public class Lexer {
 
     int var = 1, com = 1, wd = 1, num = 1;
-    int cont = 0, saltos = 1, chars = 0, lineChars = 0;
+    int cont = 0, saltos = 1, chars = 0, lineChars = 0, linePunts = 0;
     String alias;
     String parse = "";
     String patron = ("(setup|main|Akio|text|int|dou|bol|true|false|var|print|scan|type|case|if|not|for|switch|break|nul)\\b"
@@ -63,9 +63,13 @@ public class Lexer {
             } else if (m.group(5) != null) {
                 alias = getAlias(m.toMatchResult().group(0), 4);
                 if ("SP05".equals(alias)) {
+                    linePunts = lineChars + 3;
                     lineChars = m.end() + 2;
+                    chars = lineChars - linePunts;
+                } else {
+                    chars = m.start() - lineChars;
                 }
-                chars = m.start() - lineChars;
+                
                 token = new Token(m.toMatchResult().group(0), "SP", alias, "[" + saltos + "," + (chars + 1) + "]");
                 principal.object.add(token);
                 cont++;
@@ -73,9 +77,13 @@ public class Lexer {
             } else if (m.group(6) != null) {
                 alias = getAlias(m.toMatchResult().group(0), 5);
                 if ("SA01".equals(alias) | "SA02".equals(alias)) {
+                    linePunts = lineChars + 3;
                     lineChars = m.end() + 2;
+                    chars = lineChars - linePunts;
+                } else {
+                    chars = m.start() - lineChars;
                 }
-                chars = m.start() - lineChars;
+                
                 token = new Token(m.toMatchResult().group(0), "SA", alias, "[" + saltos + "," + (chars + 1) + "]");
                 principal.object.add(token);
                 cont++;
@@ -108,6 +116,7 @@ public class Lexer {
 
         }
         lineChars = 0;
+        cont = 0;
         if (cont > 0) {
             return parse.substring(0, parse.length() - 1);
         } else {

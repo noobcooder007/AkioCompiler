@@ -35,7 +35,6 @@ public class ResultSetTable extends javax.swing.JFrame {
     private void Exit() {
         principal.setVisible(true);
         principal.SaveCurrentCode();
-        tblResultsetToken.setModel(new DefaultTableModel());
         this.setVisible(false);
     }
 

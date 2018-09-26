@@ -50,9 +50,6 @@ public class Principal extends javax.swing.JFrame {
         lexico = lexer.compile(txtPanCode.getText());
         txtPanResul.setText(lexico);
         rsTable = new ResultSetTable(this);
-        for (int i = 0; i < object.size(); i++) {
-            object.remove(i);
-        }
         this.setVisible(false);
         rsTable.setVisible(true);
     }
