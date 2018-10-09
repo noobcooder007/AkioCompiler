@@ -69,7 +69,7 @@ public class Lexer {
                 } else {
                     chars = m.start() - lineChars;
                 }
-                
+
                 token = new Token(m.toMatchResult().group(0), "SP", alias, "[" + saltos + "," + (chars + 1) + "]");
                 principal.object.add(token);
                 cont++;
@@ -83,7 +83,7 @@ public class Lexer {
                 } else {
                     chars = m.start() - lineChars;
                 }
-                
+
                 token = new Token(m.toMatchResult().group(0), "SA", alias, "[" + saltos + "," + (chars + 1) + "]");
                 principal.object.add(token);
                 cont++;
@@ -115,13 +115,10 @@ public class Lexer {
             }
 
         }
+        parse = (cont > 0) ? parse.substring(0, parse.length() - 1) + "$" : "$";
         lineChars = 0;
         cont = 0;
-        if (cont > 0) {
-            return parse.substring(0, parse.length() - 1);
-        } else {
-            return "";
-        }
+        return parse;
     }
 
     public void setParse(String parse) {

@@ -18,6 +18,7 @@ public class About extends javax.swing.JFrame {
     
     /**
      * Creates new form About
+     * @param principal
      */
     public About(Principal principal) {
         initComponents();
@@ -93,7 +94,7 @@ public class About extends javax.swing.JFrame {
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Century", 0, 13)); // NOI18N
         jTextArea1.setRows(5);
-        jTextArea1.setText("Product Version: AKIO IDE 1.0\nUpdates: No yet\nAkio: 1.0\nRuntime: Akio(TM)\nSystem: Windows 10 version 10.0");
+        jTextArea1.setText("Product Version: AKIO IDE 1.0\nUpdates: No yet\nAkio: 1.0\nRuntime: Akio(TM)");
         jTextArea1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jScrollPane1.setViewportView(jTextArea1);
 

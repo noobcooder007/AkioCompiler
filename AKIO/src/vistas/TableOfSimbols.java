@@ -18,6 +18,7 @@ public class TableOfSimbols extends javax.swing.JFrame {
 
     /**
      * Creates new form TableOfSimbols
+     * @param principal
      */
     public TableOfSimbols(Principal principal) {
         initComponents();

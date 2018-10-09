@@ -20,19 +20,17 @@ import java.util.ArrayList;
 public class Principal extends javax.swing.JFrame {
 
     public ArrayList<Token> object = new ArrayList<>();
-    Lexer lexer = new Lexer(this);
-    About about = new About(this);
-    Functions func = new Functions();
-    TableOfSimbols simbols = new TableOfSimbols(this);
+    Lexer lexer;
+    About about;
+    Functions func;
+    TableOfSimbols simbols;
     ResultSetTable rsTable;
 
     String lexico;
-    private int x, y;
-    private final boolean minimiza = false;
-    private int contadorNuevo = 0;
-    public static boolean creoNuevo = false;
-    public static boolean abrioArchivo = false;
-    public static boolean guardado = false;
+    int res;
+    public boolean creoNuevo;
+    public boolean abrioArchivo;
+    public boolean guardado;
 
     /**
      * Creates new form Principal
@@ -42,7 +40,11 @@ public class Principal extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("Akio");
         this.setIconImage(new ImageIcon(getClass().getResource("/icons/akio_icon.png")).getImage());
-        creoNuevo = true;
+        lexer = new Lexer(this);
+        about = new About(this);
+        func = new Functions(this);
+        simbols = new TableOfSimbols(this);
+        txtPanCode.requestFocus();
     }
 
     private void Compile() {
@@ -50,6 +52,7 @@ public class Principal extends javax.swing.JFrame {
         lexico = lexer.compile(txtPanCode.getText());
         txtPanResul.setText(lexico);
         rsTable = new ResultSetTable(this);
+        object.clear();
         this.setVisible(false);
         rsTable.setVisible(true);
     }
@@ -63,15 +66,43 @@ public class Principal extends javax.swing.JFrame {
         txtPanCode.setText("");
     }
 
+    //Manda llamar al metodo guardar/actualizar o crear archivo segun sea el caso
     public void SaveCurrentCode() {
-        if (abrioArchivo) {
-            func.GuardarFichero(this.txtPanCode.getText(), "");
+        if (this.abrioArchivo | this.creoNuevo) {
+            res = func.GuardarFichero(this.txtPanCode.getText(), "");
+            if (res == 200) {
+                this.guardado = true;
+            }
         }
-        if (creoNuevo) {
-            func.CrearFicheroNuevo(this, this.txtPanCode.getText(), "");
+        else if (!this.creoNuevo) {
+//            res = func.CrearFicheroNuevo(this.txtPanCode.getText(), "");
+//            if (res == 200) {
+//                this.creoNuevo = true;
+//                this.abrioArchivo = true;
+//                this.guardado = true;
+//            }
+NewFile();
         }
-        if (guardado) {
-            btnSave.setEnabled(false);
+        btnSave.setEnabled(false);
+    }
+
+    // Setea los valores boleanos
+    private void setBoleans(boolean creoNuevo, boolean guardado, boolean abrioArchivo) {
+        this.creoNuevo = creoNuevo;
+        this.guardado = guardado;
+        this.abrioArchivo = abrioArchivo;
+    }
+    
+    // Manda llamar al metodo crear archivo
+    private void NewFile() {
+        if (JOptionPane.showConfirmDialog(null, "Deseas guardar el archivo") == JOptionPane.YES_OPTION) {
+            res = func.CrearFicheroNuevo(this.txtPanCode.getText(), "");
+            if (res == 200) {
+                setBoleans(true, true, true);
+            }
+        } else {
+            this.setTitle("Akio");
+            setBoleans(false, false, false);
         }
     }
 
@@ -282,42 +313,28 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRunActionPerformed
         Compile();
-        btnSave.setEnabled(true);
     }//GEN-LAST:event_btnRunActionPerformed
 
     private void txtPanCodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPanCodeKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_F6) {
             Compile();
-            btnSave.doClick();
         }
-        guardado = false;
-        creoNuevo = true;
-        abrioArchivo = false;
+        setBoleans(false, false, false);
         btnSave.setEnabled(true);
     }//GEN-LAST:event_txtPanCodeKeyReleased
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
-        if (txtPanCode.getText() != null) {
-            if (JOptionPane.showConfirmDialog(null, "Deseas guardar el archivo") == JOptionPane.YES_OPTION) {
-                func.CrearFicheroNuevo(this, this.txtPanCode.getText(), "");
-                abrioArchivo = false;
-                guardado = true;
-            } else {
-                creoNuevo = true;
-                guardado = false;
-            }
-        } else {
-            abrioArchivo = false;
-            guardado = false;
-        }
-        contadorNuevo++;
+        NewFile();
         txtPanCode.requestFocus();
         ClearOutput();
         ClearInput();
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
-        func.LeerFichero(this);
+        res = func.LeerFichero();
+        if (res == 200) {
+            setBoleans(false, true, true);
+        }
     }//GEN-LAST:event_btnOpenActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -330,13 +347,19 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAboutActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        if (!guardado) {
-            if (JOptionPane.showConfirmDialog(null, "No se guardaran los cambios hechos, ¿Deseas guardar?\n"
-                    + "Perderas todo tu trabajo... y puede que sea mucho") == JOptionPane.YES_OPTION) {
-                creoNuevo = true;
-                btnSave.doClick();
-            } else {
-                System.exit(0);
+        if (!this.guardado) {
+            int opcion = JOptionPane.showConfirmDialog(null, "No se guardaran los cambios hechos, ¿Deseas guardar?\n"
+                    + "Perderas todo tu trabajo... y puede que sea mucho");
+            switch (opcion) {
+                case JOptionPane.YES_OPTION:
+                    SaveCurrentCode();
+                    break;
+                case JOptionPane.CANCEL_OPTION:
+                    break;
+                case JOptionPane.NO_OPTION:
+                    System.exit(0);
+                default:
+                    break;
             }
         } else {
             System.exit(0);

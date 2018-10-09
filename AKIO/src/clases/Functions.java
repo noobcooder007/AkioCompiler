@@ -10,14 +10,16 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import vistas.Principal;
 
 /**
- *
  * @author charg
+ * Clase para manejar archivos de texto plano,
+ * contiene las funciones leer, crear y guardar/actualizar archivo.
  */
 public class Functions {
 
@@ -26,8 +28,16 @@ public class Functions {
     private Principal principal;
     public static String ruta = "";
 
-    public void LeerFichero(Principal principal) {
+    public Functions(Principal principal) {
         this.principal = principal;
+    }
+
+    /**
+     * Metodo para leer un archivo de texto plano con formato predeterminado.
+     * @return Retorna un valor que comprueba que se pudo leer el archivo 
+     * sin ningun problema, en caso contrario mandara una excepción.
+     */
+    public int LeerFichero() {
         accion = new JFileChooser();
         accion.setFileSelectionMode(0);
         FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("AK", "ak");
@@ -35,7 +45,7 @@ public class Functions {
         accion.setDialogTitle("Abrir archivo");
         if (accion.showOpenDialog(principal) == JFileChooser.APPROVE_OPTION) {
             archivo = accion.getSelectedFile();
-            principal.setTitle("Akio - " + archivo.getName());
+            this.principal.setTitle("Akio - " + archivo.getName());
             ruta = accion.getSelectedFile().toString();
             try {
                 /*Si existe el fichero*/
@@ -48,24 +58,31 @@ public class Functions {
                         /*Imprime la linea leida*/
                         datos = datos + Slinea + "\n";
                     }
-                    principal.txtPanCode.setText(datos);
+                    if (datos.length() > 0) {
+                        principal.txtPanCode.setText(datos.substring(0, datos.length() - 1));
+                    }
                     principal.txtPanCode.setEditable(true);
                     principal.txtPanCode.requestFocus();
                     /*Cierra el flujo*/
                     leeArchivo.close();
-                    this.principal.abrioArchivo = true;
-                    this.principal.creoNuevo = false;
-                    this.principal.guardado = true;
                 }
-            } catch (Exception ex) {
+            } catch (IOException ex) {
                 /*Captura un posible error y le imprime en pantalla*/
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
         }
+        return 200;
     }
 
-    public void CrearFicheroNuevo(Principal principal, String SCadena, String nombre) {
-        this.principal = principal;
+    /**
+     * Metodo para crear un archivo de texto plano con formato predeterminado.
+     * @param nombre
+     * @param SCadena cadena de tipo String que contiene la cadena a guardar en un archivo
+     * de text plano.
+     * @return Retorna un valor que comprueba que se pudo crear el archivo 
+     * sin ningun problema, en caso contrario mandara una excepción.
+     */
+    public int CrearFicheroNuevo(String SCadena, String nombre) {
         accion = new JFileChooser();
         accion.setFileSelectionMode(0);
         FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("AK", "ak");
@@ -74,6 +91,7 @@ public class Functions {
         accion.setSelectedFile(new File(nombre));
         if (accion.showSaveDialog(principal) == JFileChooser.APPROVE_OPTION) {
             ruta = accion.getSelectedFile().toString();
+            if (!ruta.endsWith(".ak")) ruta.concat(".ak");
             archivo = new File(ruta);
             try {
                 //Si Existe el fichero lo borra
@@ -81,9 +99,10 @@ public class Functions {
                     if (JOptionPane.showConfirmDialog(null, "Se sobreescribira el archivo") == JOptionPane.YES_OPTION) {
                         archivo.delete();
                         archivo = new File(ruta);
+                        this.principal.setTitle("Akio - " + archivo.getName());
                     } else {
-                        JOptionPane.showMessageDialog(null, "Estuvo cerca");
                         archivo = new File(ruta.substring(0, ruta.length() - 3) + " - copia.ak");
+                        this.principal.setTitle("Akio - " + archivo.getName());
                     }
                 }
                 BufferedWriter wr = new BufferedWriter(new FileWriter(archivo));
@@ -94,36 +113,52 @@ public class Functions {
                 buffer.close();
                 wr.close();
                 escribirArchivo.close();
-
-                this.principal.abrioArchivo = true;
-                this.principal.creoNuevo = false;
-                this.principal.guardado = true;
             } catch (Exception ex) {
             }
+            return 200;
+        } else {
+            return 0;
         }
     }
 
-    public void GuardarFichero(String SCadena, String nombre) {
-        archivo = new File(ruta + ".ak");
-        System.out.println(ruta);
+    /**
+     * Metodo para guardar un archivo de texto plano con formato predeterminado.
+     * @param SCadena cadena de tipo String que contiene la cadena a guardar en un archivo
+     * @param nombre
+     * @return Retorna un valor que comprueba que se pudo guardar el archivo 
+     * sin ningun problema, en caso contrario mandara una excepción.
+     */
+    public int GuardarFichero(String SCadena, String nombre) {
         try {
-            //Si Existe el fichero lo borra
+            /* Si existe el fichero no lo crea de nuevo */
             if (archivo.exists()) {
-                archivo.delete();
+                BufferedReader leeArchivo = new BufferedReader(new FileReader(archivo));
+                String Slinea, datos = "";
+                /*Lee el fichero linea a linea hasta llegar a la ultima*/
+                while ((Slinea = leeArchivo.readLine()) != null) {
+                    /*Imprime la linea leida*/
+                    datos = datos + Slinea + "\n";
+                }
+                if (datos.length() > 0) {
+                    datos = datos.substring(0, datos.length() - 1);
+                }
+                /* Si el archivo contiene el mismo texto que la caja de texto no lo guardara */
+                if (!datos.equals(SCadena)) {
+                    BufferedWriter wr = new BufferedWriter(new FileWriter(archivo));
+                    FileWriter escribirArchivo = new FileWriter(archivo, true);
+                    BufferedWriter buffer = new BufferedWriter(escribirArchivo);
+                    buffer.write(SCadena);
+                    //buffer.newLine();
+                    buffer.close();
+                    wr.close();
+                    escribirArchivo.close();
+                }
+                this.principal.setTitle("Akio - " + archivo.getName());
             }
-            BufferedWriter wr = new BufferedWriter(new FileWriter(archivo));
-            FileWriter escribirArchivo = new FileWriter(archivo, true);
-            BufferedWriter buffer = new BufferedWriter(escribirArchivo);
-            buffer.write(SCadena);
-            //buffer.newLine();
-            buffer.close();
-            wr.close();
-            escribirArchivo.close();
-            this.principal.guardado = true;
-        } catch (Exception ex) {
-            //Captura un posible error le imprime en pantalla 
+        } catch (IOException ex) {
+            /* Captura un posible error le imprime en pantalla  */
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
+        return 200;
     }
-
 }

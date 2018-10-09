@@ -17,8 +17,10 @@ import javax.swing.table.DefaultTableModel;
 public class ResultSetTable extends javax.swing.JFrame {
 
     Principal principal;
+    
     /**
      * Creates new form ResultSetTable
+     * @param principal
      */
     public ResultSetTable(Principal principal) {
         initComponents();
@@ -143,7 +145,8 @@ public class ResultSetTable extends javax.swing.JFrame {
         for (Token object : principal.object) {
             Object row[] = {object.getToken(), object.getLexema(), object.getAlias(), object.getAparicion()};
             tmp.addRow(row);
-        } tblResultsetToken.setModel(tmp);
+        } 
+        tblResultsetToken.setModel(tmp);
     }
     
     /**
