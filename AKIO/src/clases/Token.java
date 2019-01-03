@@ -11,13 +11,14 @@ package clases;
  */
 public class Token {
     
-    String token, lexema, alias, aparicion;
+    String token, lexema, alias, row, col;
 
-    public Token(String token, String lexema, String alias, String aparicion) {
+    public Token(String token, String lexema, String alias, String row, String col) {
         this.token = token;
         this.lexema = lexema;
         this.alias = alias;
-        this.aparicion = aparicion;
+        this.row = row;
+        this.col = col;
     }
 
     public String getToken() {
@@ -44,12 +45,20 @@ public class Token {
         this.alias = alias;
     }
 
-    public String getAparicion() {
-        return aparicion;
+    public String getRow() {
+        return row;
     }
 
-    public void setAparicion(String aparicion) {
-        this.aparicion = aparicion;
+    public void setRow(String row) {
+        this.row = row;
+    }
+
+    public String getCol() {
+        return col;
+    }
+
+    public void setCol(String col) {
+        this.col = col;
     }
     
 }

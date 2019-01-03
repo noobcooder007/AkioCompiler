@@ -15,12 +15,12 @@ import vistas.Principal;
  */
 public class Lexer {
 
-    int var = 1, com = 1, wd = 1, num = 1;
+    int var = 1, com = 1, wd = 1, num = 1, err = 0;
     int cont = 0, saltos = 1, chars = 0, lineChars = 0, linePunts = 0;
     String alias;
     String parse = "";
-    String patron = ("(setup|main|Akio|text|int|dou|bol|true|false|var|print|scan|type|case|if|not|for|switch|break|nul)\\b"
-            + "|([&|||!])|([<|>])|([+|-|*|/|^|%])|([_|=|,|:|?|;])|([{|}|(|)])|(@[a-zA-Z0-9]+)|(#[^#|\n]+)|('[^']+')|([0-9]+)|([\n])");
+    String patron = ("(BEGIN|END|TEXT|INT|DOU|BOL|TRUE|FALSE|PRINT|SCAN|IF|FOR|WHILE|INC|TO|STOP|EWHILE|EIF)"
+            + "|([<|>])|([+|\\-|*|/])|([=|,|;|'])|([{|}|(|)])|(@[a-zA-Z0-9]+)|(#[^#|\n]+)|([:|^|%|&|°|¬|\\\\|¿|?|!|$|¡|~|´|¨|`])|([a-zA-Z]+)|(([0-9]+(\\.)[0-9]+)|([0-9]+))|([\n])");
     Pattern p = Pattern.compile(patron);
     Token token;
     Principal principal;
@@ -35,47 +35,39 @@ public class Lexer {
             if (m.group(1) != null) {
                 alias = getAlias(m.toMatchResult().group(0), 0);
                 chars = m.start() - lineChars;
-                token = new Token(m.toMatchResult().group(0), "PR", alias, "[" + saltos + "," + (chars + 1) + "]");
+                token = new Token(m.toMatchResult().group(0), "PR", alias, String.valueOf(saltos), String.valueOf(chars + 2));
                 principal.object.add(token);
                 cont++;
                 parse += alias + " ";
             } else if (m.group(2) != null) {
                 alias = getAlias(m.toMatchResult().group(0), 1);
                 chars = m.start() - lineChars;
-                token = new Token(m.toMatchResult().group(0), "OL", alias, "[" + saltos + "," + (chars + 1) + "]");
+                token = new Token(m.toMatchResult().group(0), "OR", alias, String.valueOf(saltos), String.valueOf(chars + 1));
                 principal.object.add(token);
                 cont++;
                 parse += alias + " ";
             } else if (m.group(3) != null) {
                 alias = getAlias(m.toMatchResult().group(0), 2);
                 chars = m.start() - lineChars;
-                token = new Token(m.toMatchResult().group(0), "OR", alias, "[" + saltos + "," + (chars + 1) + "]");
+                token = new Token(m.toMatchResult().group(0), "OA", alias, String.valueOf(saltos), String.valueOf(chars + 1));
                 principal.object.add(token);
                 cont++;
                 parse += alias + " ";
             } else if (m.group(4) != null) {
                 alias = getAlias(m.toMatchResult().group(0), 3);
-                chars = m.start() - lineChars;
-                token = new Token(m.toMatchResult().group(0), "OA", alias, "[" + saltos + "," + (chars + 1) + "]");
-                principal.object.add(token);
-                cont++;
-                parse += alias + " ";
-            } else if (m.group(5) != null) {
-                alias = getAlias(m.toMatchResult().group(0), 4);
-                if ("SP05".equals(alias)) {
+                if ("SP03".equals(alias)) {
                     linePunts = lineChars + 3;
                     lineChars = m.end() + 2;
                     chars = lineChars - linePunts;
                 } else {
                     chars = m.start() - lineChars;
                 }
-
-                token = new Token(m.toMatchResult().group(0), "SP", alias, "[" + saltos + "," + (chars + 1) + "]");
+                token = new Token(m.toMatchResult().group(0), "SP", alias, String.valueOf(saltos), String.valueOf(chars + 1));
                 principal.object.add(token);
                 cont++;
                 parse += alias + " ";
-            } else if (m.group(6) != null) {
-                alias = getAlias(m.toMatchResult().group(0), 5);
+            } else if (m.group(5) != null) {
+                alias = getAlias(m.toMatchResult().group(0), 4);
                 if ("SA01".equals(alias) | "SA02".equals(alias)) {
                     linePunts = lineChars + 3;
                     lineChars = m.end() + 2;
@@ -83,29 +75,40 @@ public class Lexer {
                 } else {
                     chars = m.start() - lineChars;
                 }
-
-                token = new Token(m.toMatchResult().group(0), "SA", alias, "[" + saltos + "," + (chars + 1) + "]");
+                token = new Token(m.toMatchResult().group(0), "SA", alias, String.valueOf(saltos), String.valueOf(chars + 1));
+                principal.object.add(token);
+                cont++;
+                parse += alias + " ";
+            } else if (m.group(6) != null) {
+                alias = getAlias(m.toMatchResult().group(0), 5);
+                chars = m.start() - lineChars;
+                token = new Token(m.toMatchResult().group(0), "VAR", alias, String.valueOf(saltos), String.valueOf(chars + 1));
                 principal.object.add(token);
                 cont++;
                 parse += alias + " ";
             } else if (m.group(7) != null) {
+                //System.out.println("COMENTARIO: " + m.toMatchResult().group());
+                code = code.replaceAll(m.toMatchResult().group(), "");
+            } else if (m.group(8) != null) {
+                int row = 1, col = 1;
+                if (principal.object.size() > 0) {
+                    row = Integer.parseInt(principal.object.get(principal.object.size() - 1).getRow());
+                    col = Integer.parseInt(principal.object.get(principal.object.size() - 1).getCol());
+                }
+                System.out.println("Caracter erroneo: [" + row + ", " + col + "]");
+                err++;
+                break;
+            } else if (m.group(9) != null) {
                 alias = getAlias(m.toMatchResult().group(0), 6);
                 chars = m.start() - lineChars;
-                token = new Token(m.toMatchResult().group(0), "VAR", alias, "[" + saltos + "," + (chars + 1) + "]");
-                principal.object.add(token);
-                cont++;
-                parse += alias + " ";
-            } else if (m.group(9) != null) {
-                alias = getAlias(m.toMatchResult().group(0), 8);
-                chars = m.start() - lineChars;
-                token = new Token(m.toMatchResult().group(0), "PAL", alias, "[" + saltos + "," + (chars + 1) + "]");
+                token = new Token(m.toMatchResult().group(0), "PAL", alias, String.valueOf(saltos), String.valueOf(chars + 1));
                 principal.object.add(token);
                 cont++;
                 parse += alias + " ";
             } else if (m.group(10) != null) {
-                alias = getAlias(m.toMatchResult().group(0), 9);
+                alias = getAlias(m.toMatchResult().group(0), 7);
                 chars = m.start() - lineChars;
-                token = new Token(m.toMatchResult().group(0), "NUM", alias, "[" + saltos + "," + (chars + 1) + "]");
+                token = new Token(m.toMatchResult().group(0), "NUM", alias, String.valueOf(saltos), String.valueOf(chars + 1));
                 principal.object.add(token);
                 cont++;
                 parse += alias + " ";
@@ -118,6 +121,12 @@ public class Lexer {
         parse = (cont > 0) ? parse.substring(0, parse.length() - 1) + "$" : "$";
         lineChars = 0;
         cont = 0;
+        saltos = 1;
+        var = 1;
+        wd = 1;
+        num = 1;
+        principal.FinishLexer = !(err > 0);
+        err = 0;
         return parse;
     }
 
@@ -129,82 +138,64 @@ public class Lexer {
         switch (n) {
             case 0:
                 switch (token) {
-                    case "Akio":
+                    case "BEGIN":
                         alias = "PR01";
                         break;
-                    case "setup":
+                    case "END":
                         alias = "PR02";
                         break;
-                    case "main":
+                    case "TEXT":
                         alias = "PR03";
                         break;
-                    case "text":
+                    case "INT":
                         alias = "PR04";
                         break;
-                    case "int":
+                    case "DOU":
                         alias = "PR05";
                         break;
-                    case "dou":
+                    case "BOL":
                         alias = "PR06";
                         break;
-                    case "bol":
+                    case "TRUE":
                         alias = "PR07";
                         break;
-                    case "true":
+                    case "FALSE":
                         alias = "PR08";
                         break;
-                    case "false":
+                    case "PRINT":
                         alias = "PR09";
                         break;
-                    case "var":
+                    case "SCAN":
                         alias = "PR10";
                         break;
-                    case "print":
+                    case "IF":
                         alias = "PR11";
                         break;
-                    case "scan":
+                    case "EIF":
                         alias = "PR12";
                         break;
-                    case "type":
+                    case "FOR":
                         alias = "PR13";
                         break;
-                    case "case":
+                    case "INC":
                         alias = "PR14";
                         break;
-                    case "if":
+                    case "TO":
                         alias = "PR15";
                         break;
-                    case "not":
+                    case "STOP":
                         alias = "PR16";
                         break;
-                    case "for":
+                    case "WHILE":
                         alias = "PR17";
                         break;
-                    case "switch":
+                    case "EWHILE":
                         alias = "PR18";
                         break;
-                    case "break":
-                        alias = "PR19";
-                        break;
-                    case "nul":
-                        alias = "PR20";
-                        break;
+                    
                 }
                 break;
             case 1:
-                switch (token) {
-                    case "&":
-                        alias = "OL01";
-                        break;
-                    case "|":
-                        alias = "OL02";
-                        break;
-                    case "!":
-                        alias = "OL03";
-                        break;
-                }
-                break;
-            case 2:
                 switch (token) {
                     case "<":
                         alias = "OR01";
@@ -214,7 +205,7 @@ public class Lexer {
                         break;
                 }
                 break;
-            case 3:
+            case 2:
                 switch (token) {
                     case "+":
                         alias = "OA01";
@@ -228,34 +219,25 @@ public class Lexer {
                     case "/":
                         alias = "OA04";
                         break;
-                    case "^":
-                        alias = "OA05";
+                }
+                break;
+            case 3:
+                switch (token) {
+                    case "=":
+                        alias = "SP01";
                         break;
-                    case "%":
-                        alias = "OA06";
+                    case ",":
+                        alias = "SP02";
+                        break;
+                    case ";":
+                        alias = "SP03";
+                        break;
+                    case "'":
+                        alias = "SP04";
                         break;
                 }
                 break;
             case 4:
-                switch (token) {
-                    case "_":
-                        alias = "SP01";
-                        break;
-                    case "=":
-                        alias = "SP02";
-                        break;
-                    case "?":
-                        alias = "SP03";
-                        break;
-                    case ":":
-                        alias = "SP04";
-                        break;
-                    case ";":
-                        alias = "SP05";
-                        break;
-                }
-                break;
-            case 5:
                 switch (token) {
                     case "{":
                         alias = "SA01";
@@ -271,16 +253,16 @@ public class Lexer {
                         break;
                 }
                 break;
-            case 6:
-                alias = (var > 9) ? "VAR" + var : "VAR0" + var;
+            case 5:
+                alias = "VAR" + var;
                 var++;
                 break;
-            case 8:
-                alias = (wd > 9) ? "PAL" + wd : "PAL0" + wd;
+            case 6:
+                alias = "PAL" + wd;
                 wd++;
                 break;
-            case 9:
-                alias = (num > 9) ? "NUM" + num : "NUM0" + num;
+            case 7:
+                alias = "NUM" + num;
                 num++;
                 break;
         }

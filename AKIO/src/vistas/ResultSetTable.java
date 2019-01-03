@@ -27,7 +27,6 @@ public class ResultSetTable extends javax.swing.JFrame {
         this.principal = principal;
         this.setLocationRelativeTo(null);
         this.setIconImage(new ImageIcon(getClass().getResource("/icons/akio_icon.png")).getImage());
-        showTable();
     }
 
     private ResultSetTable() {
@@ -140,10 +139,14 @@ public class ResultSetTable extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formKeyReleased
 
-    private void showTable() {
+    public void showTable() {
+        
         DefaultTableModel tmp = (DefaultTableModel) tblResultsetToken.getModel();
+        if (tmp.getRowCount() > 0) {
+            tmp.setRowCount(0);
+        }
         for (Token object : principal.object) {
-            Object row[] = {object.getToken(), object.getLexema(), object.getAlias(), object.getAparicion()};
+            Object row[] = {object.getToken(), object.getLexema(), object.getAlias(), object.getRow() + "," + object.getCol()};
             tmp.addRow(row);
         } 
         tblResultsetToken.setModel(tmp);

@@ -40,6 +40,7 @@ public class Functions {
     public int LeerFichero() {
         accion = new JFileChooser();
         accion.setFileSelectionMode(0);
+        accion.setCurrentDirectory(new File("C:\\Users\\charg\\Documents\\ISC7A\\Lenguajes y Automatas II\\codes\\"));
         FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("AK", "ak");
         accion.setFileFilter(filtroImagen);
         accion.setDialogTitle("Abrir archivo");
@@ -85,13 +86,14 @@ public class Functions {
     public int CrearFicheroNuevo(String SCadena, String nombre) {
         accion = new JFileChooser();
         accion.setFileSelectionMode(0);
+        accion.setCurrentDirectory(new File("C:\\Users\\charg\\Documents\\ISC7A\\Lenguajes y Automatas II\\codes\\"));
         FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("AK", "ak");
         accion.setFileFilter(filtroImagen);
         accion.setDialogTitle("Guardar archivo " + nombre);
         accion.setSelectedFile(new File(nombre));
         if (accion.showSaveDialog(principal) == JFileChooser.APPROVE_OPTION) {
             ruta = accion.getSelectedFile().toString();
-            if (!ruta.endsWith(".ak")) ruta.concat(".ak");
+            if (!ruta.endsWith(".ak")) ruta+=".ak";
             archivo = new File(ruta);
             try {
                 //Si Existe el fichero lo borra

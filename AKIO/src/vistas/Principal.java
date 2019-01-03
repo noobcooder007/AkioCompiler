@@ -7,6 +7,7 @@ package vistas;
 
 import clases.Lexer;
 import clases.Functions;
+import clases.Sintax;
 import clases.Token;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
@@ -21,16 +22,20 @@ public class Principal extends javax.swing.JFrame {
 
     public ArrayList<Token> object = new ArrayList<>();
     Lexer lexer;
+    Sintax sintax;
     About about;
     Functions func;
     TableOfSimbols simbols;
     ResultSetTable rsTable;
 
     String lexico;
+    public String code;
     int res;
     public boolean creoNuevo;
     public boolean abrioArchivo;
     public boolean guardado;
+    public boolean FinishLexer;
+    public boolean FinishSintax;
 
     /**
      * Creates new form Principal
@@ -41,9 +46,11 @@ public class Principal extends javax.swing.JFrame {
         this.setTitle("Akio");
         this.setIconImage(new ImageIcon(getClass().getResource("/icons/akio_icon.png")).getImage());
         lexer = new Lexer(this);
+        sintax = new Sintax(this);
         about = new About(this);
         func = new Functions(this);
         simbols = new TableOfSimbols(this);
+        rsTable = new ResultSetTable(this);
         txtPanCode.requestFocus();
     }
 
@@ -51,10 +58,19 @@ public class Principal extends javax.swing.JFrame {
         ClearOutput();
         lexico = lexer.compile(txtPanCode.getText());
         txtPanResul.setText(lexico);
-        rsTable = new ResultSetTable(this);
+        rsTable.showTable();
+        code = "";
         object.clear();
-        this.setVisible(false);
-        rsTable.setVisible(true);
+        if (FinishLexer) {
+            this.setVisible(false);
+            rsTable.setVisible(true);
+            sintax.compile(txtPanCode.getText());
+            if (FinishSintax) {
+                JOptionPane.showMessageDialog(null, "Compilado correctamente lml");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Análisis lexico erroneo");
+        }
     }
 
     private void ClearOutput() {
@@ -83,7 +99,7 @@ public class Principal extends javax.swing.JFrame {
 //            }
 NewFile();
         }
-        btnSave.setEnabled(false);
+        if(guardado) btnSave.setEnabled(false);
     }
 
     // Setea los valores boleanos
@@ -206,6 +222,7 @@ NewFile();
         btnSave.setBorderPainted(false);
         btnSave.setContentAreaFilled(false);
         btnSave.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSave.setEnabled(false);
         btnSave.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/sharp_save_white_18dp 36x36.png"))); // NOI18N
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
