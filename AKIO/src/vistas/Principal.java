@@ -56,15 +56,15 @@ public class Principal extends javax.swing.JFrame {
 
     private void Compile() {
         ClearOutput();
-        lexico = lexer.compile(txtPanCode.getText());
+        code = txtPanCode.getText();
+        lexico = lexer.compile(code);
         txtPanResul.setText(lexico);
         rsTable.showTable();
-        code = "";
         object.clear();
         if (FinishLexer) {
             this.setVisible(false);
             rsTable.setVisible(true);
-            sintax.compile(txtPanCode.getText());
+            sintax.compile(code);
             if (FinishSintax) {
                 JOptionPane.showMessageDialog(null, "Compilado correctamente lml");
             }

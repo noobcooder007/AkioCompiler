@@ -126,6 +126,7 @@ public class Lexer {
         wd = 1;
         num = 1;
         principal.FinishLexer = !(err > 0);
+        principal.code = code;
         err = 0;
         return parse;
     }
