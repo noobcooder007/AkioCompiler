@@ -70,12 +70,12 @@ public class Principal extends javax.swing.JFrame {
             rsTable.setVisible(true);
             sintax.compile(code);
             if (FinishSintax) {
-                JOptionPane.showMessageDialog(null, "Analisis Sintatico Semantico correcto lml");
                 translate.compile(code);
-                System.out.println(bas);
+            } else {
+                JOptionPane.showMessageDialog(null, "Análisis Sintatico Semantico incorrecto lml");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Análisis lexico erroneo");
+            JOptionPane.showMessageDialog(null, "Análisis Lexico erroneo");
         }
     }
 
@@ -95,17 +95,18 @@ public class Principal extends javax.swing.JFrame {
             if (res == 200) {
                 this.guardado = true;
             }
-        }
-        else if (!this.creoNuevo) {
+        } else if (!this.creoNuevo) {
 //            res = func.CrearFicheroNuevo(this.txtPanCode.getText(), "");
 //            if (res == 200) {
 //                this.creoNuevo = true;
 //                this.abrioArchivo = true;
 //                this.guardado = true;
 //            }
-NewFile();
+            NewFile();
         }
-        if(guardado) btnSave.setEnabled(false);
+        if (guardado) {
+            btnSave.setEnabled(false);
+        }
     }
 
     // Setea los valores boleanos
@@ -114,7 +115,7 @@ NewFile();
         this.guardado = guardado;
         this.abrioArchivo = abrioArchivo;
     }
-    
+
     // Manda llamar al metodo crear archivo
     private void NewFile() {
         if (JOptionPane.showConfirmDialog(null, "Deseas guardar el archivo") == JOptionPane.YES_OPTION) {

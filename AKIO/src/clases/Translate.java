@@ -328,5 +328,6 @@ public class Translate {
                 }
             }
         }
+        principal.bas = principal.bas.replaceAll("@", "");
     }
 }
