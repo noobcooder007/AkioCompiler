@@ -9,6 +9,7 @@ import clases.Lexer;
 import clases.Functions;
 import clases.Sintax;
 import clases.Token;
+import clases.Translate;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -23,6 +24,7 @@ public class Principal extends javax.swing.JFrame {
     public ArrayList<Token> object = new ArrayList<>();
     Lexer lexer;
     Sintax sintax;
+    Translate translate;
     About about;
     Functions func;
     TableOfSimbols simbols;
@@ -30,6 +32,7 @@ public class Principal extends javax.swing.JFrame {
 
     String lexico;
     public String code;
+    public String bas;
     int res;
     public boolean creoNuevo;
     public boolean abrioArchivo;
@@ -47,6 +50,7 @@ public class Principal extends javax.swing.JFrame {
         this.setIconImage(new ImageIcon(getClass().getResource("/icons/akio_icon.png")).getImage());
         lexer = new Lexer(this);
         sintax = new Sintax(this);
+        translate = new Translate(this);
         about = new About(this);
         func = new Functions(this);
         simbols = new TableOfSimbols(this);
@@ -66,7 +70,9 @@ public class Principal extends javax.swing.JFrame {
             rsTable.setVisible(true);
             sintax.compile(code);
             if (FinishSintax) {
-                JOptionPane.showMessageDialog(null, "Compilado correctamente lml");
+                JOptionPane.showMessageDialog(null, "Analisis Sintatico Semantico correcto lml");
+                translate.compile(code);
+                System.out.println(bas);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Análisis lexico erroneo");

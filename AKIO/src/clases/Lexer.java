@@ -20,7 +20,7 @@ public class Lexer {
     String alias;
     String parse = "";
     String patron = ("(BEGIN|END|TEXT|INT|DOU|BOL|TRUE|FALSE|PRINT|SCAN|IF|FOR|WHILE|INC|TO|STOP|EWHILE|EIF)"
-            + "|([<|>])|([+|\\-|*|/])|([=|,|;|'])|([{|}|(|)])|(@[a-zA-Z0-9]+)|(#[^#|\n]+)|([:|^|%|&|°|¬|\\\\|¿|?|!|$|¡|~|´|¨|`])|([a-zA-Z]+)|(([0-9]+(\\.)[0-9]+)|([0-9]+))|([\n])");
+            + "|([<|>])|([+|\\-|*|/])|([=|,|;|'])|([{|}|(|)])|(@[a-zA-Z0-9]+)|(#[^#|\n]+)|([|&|°|¬|\\\\|!|$|¡|~|´|¨|`])|([a-zA-Z]+)|(([0-9]+(\\.)[0-9]+)|([0-9]+))|([\n])");
     Pattern p = Pattern.compile(patron);
     Token token;
     Principal principal;
@@ -92,7 +92,7 @@ public class Lexer {
             } else if (m.group(8) != null) {
                 int row = 1, col = 1;
                 if (principal.object.size() > 0) {
-                    row = Integer.parseInt(principal.object.get(principal.object.size() - 1).getRow());
+                    row = saltos;
                     col = Integer.parseInt(principal.object.get(principal.object.size() - 1).getCol());
                 }
                 System.out.println("Caracter erroneo: [" + row + ", " + col + "]");

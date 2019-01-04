@@ -52,7 +52,7 @@ public class Sintax {
             when2 = "((\\s)*WHILE(\\s)*(\\()(\\s)*" + condicion + "(\\s)*(\\))(\\s)*(\\{))",
             when3 = "((\\s)*EWHILE(\\s)*(\\}))",
             it2 = "((\\s)*IF(\\s)*(\\()(\\s)*" + condicion + "(\\s)*(\\))(\\s)*(\\{))",
-            it3 = "((\\s)*COMPLETE(\\s)*(\\}))",
+            it3 = "((\\s)*EIF(\\s)*(\\}))",
             entero = "[0-9]*",
             decimal = "[0-9]*.[0-9]+";
 
@@ -281,7 +281,7 @@ public class Sintax {
                         errores = 1;
                         break;
                     }
-                    if (token.contains("EIT")) {
+                    if (token.contains("EIF")) {
                         JOptionPane.showMessageDialog(null, "Cierre de condicion IF incorrecto en la linea " + i + ": \n"
                                 + "\n" + token);
                         errores = 1;
@@ -390,7 +390,7 @@ public class Sintax {
                         errores = 1;
                         break;
                     }
-                    if (token.contains("COMPLETE")) {
+                    if (token.contains("EIF")) {
                         JOptionPane.showMessageDialog(null, "Cierre de condicion IF incorrecto; en la linea " + i + ": \n"
                                 + "\n" + token);
                         errores = 1;
