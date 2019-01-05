@@ -33,7 +33,6 @@ public class About extends javax.swing.JFrame {
     }
     
     private void Exit() {
-        principal.setVisible(true);
         this.setVisible(false);
     }
 

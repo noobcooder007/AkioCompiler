@@ -43,7 +43,7 @@ public class Sintax {
             defVal = "((\\s)*" + id + "(\\s)*=(\\s)*(" + id + "|" + text + "|" + operaciones + "|" + num + "|" + dec + ")(\\s)*(;))",
             defValVar = "((\\s)*" + id + "(\\s)*=(\\s)*(" + id + "|" + text + "|" + operaciones + "|" + num + "|" + dec + ")(\\s)*)",
             condicion = id + "(\\s)*" + simbolo + "(\\s)*(" + id + "|" + num + "|" + dec + ")((\\s)*([(&&)(||)](\\s)*" + id + "(\\s)*" + simbolo + "(\\s)*(" + id + "|" + num + "|" + dec + ")))*",
-            var = "((\\s)*((INT)|(DOU)|(TEXT))(\\b)(\\s)*(" + id + "|" + defValVar + ")((\\s)*(,(\\s)*(" + id + "|" + defValVar + ")))*(\\s)*(;))",
+            var = "((\\s)*((INT)|(DOU)|(TEXT))(\\b)(\\s)*(" + id + ")((\\s)*(,(\\s)*(" + id + ")))*(\\s)*(;))",
             main = "((\\s)*" + id2 + "(\\b)(\\s)*BEGIN(\\s)*(\\{)[.\\W\\w\\s]*(END(\\s)*(\\})(\\s)*)$)",
             main2 = "((\\s)*" + id2 + "(\\b)(\\s)*BEGIN(\\s)*(\\{))",
             main3 = "((\\s)*END(\\s)*(\\})(\\s)*)",

@@ -5,31 +5,27 @@
  */
 package vistas;
 
-import clases.Token;
-import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author charg
  */
-public class ResultSetTable extends javax.swing.JFrame {
+public class BAScode extends javax.swing.JFrame {
 
     Principal principal;
-    
+
     /**
-     * Creates new form ResultSetTable
-     * @param principal
+     * Creates new form BAScode
      */
-    public ResultSetTable(Principal principal) {
+    public BAScode(Principal principal) {
         initComponents();
         this.principal = principal;
         this.setLocationRelativeTo(null);
         this.setIconImage(new ImageIcon(getClass().getResource("/icons/akio_icon.png")).getImage());
     }
 
-    private ResultSetTable() {
+    private BAScode() {
         
     }
     
@@ -37,6 +33,10 @@ public class ResultSetTable extends javax.swing.JFrame {
         this.dispose();
     }
 
+    public void setText(String code) {
+        txtTranslated.setText(code);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,7 +48,8 @@ public class ResultSetTable extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblResultsetToken = new javax.swing.JTable();
+        txtTranslated = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -57,38 +58,27 @@ public class ResultSetTable extends javax.swing.JFrame {
                 formWindowClosing(evt);
             }
         });
-        addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                formKeyReleased(evt);
-            }
-        });
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 102));
 
-        tblResultsetToken.setBackground(new java.awt.Color(0, 130, 130));
-        tblResultsetToken.setForeground(new java.awt.Color(255, 255, 255));
-        tblResultsetToken.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        txtTranslated.setEditable(false);
+        txtTranslated.setBackground(new java.awt.Color(0, 130, 130));
+        txtTranslated.setColumns(20);
+        txtTranslated.setForeground(new java.awt.Color(255, 255, 255));
+        txtTranslated.setRows(5);
+        jScrollPane1.setViewportView(txtTranslated);
 
-            },
-            new String [] {
-                "TOKEN", "LEXEMA", "ALIAS", "APARICIÓN"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
+        jButton1.setBackground(new java.awt.Color(0, 102, 102));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("GUARDAR");
+        jButton1.setToolTipText("GUARDAR CODIGO BAS");
+        jButton1.setBorderPainted(false);
+        jButton1.setContentAreaFilled(false);
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tblResultsetToken);
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("TABLA DE TOKEN'S");
+        jLabel1.setText("CODIGO BAS");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -96,20 +86,26 @@ public class ResultSetTable extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(163, 163, 163)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(88, 88, 88)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(101, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel1)
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -117,7 +113,7 @@ public class ResultSetTable extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,25 +127,6 @@ public class ResultSetTable extends javax.swing.JFrame {
         Exit();
     }//GEN-LAST:event_formWindowClosing
 
-    private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
-        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            Exit();
-        }
-    }//GEN-LAST:event_formKeyReleased
-
-    public void showTable() {
-        
-        DefaultTableModel tmp = (DefaultTableModel) tblResultsetToken.getModel();
-        if (tmp.getRowCount() > 0) {
-            tmp.setRowCount(0);
-        }
-        for (Token object : principal.object) {
-            Object row[] = {object.getToken(), object.getLexema(), object.getAlias(), object.getRow() + "," + object.getCol()};
-            tmp.addRow(row);
-        } 
-        tblResultsetToken.setModel(tmp);
-    }
-    
     /**
      * @param args the command line arguments
      */
@@ -167,30 +144,29 @@ public class ResultSetTable extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ResultSetTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BAScode.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ResultSetTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BAScode.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ResultSetTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BAScode.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ResultSetTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BAScode.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ResultSetTable().setVisible(true);
+                new BAScode().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblResultsetToken;
+    private javax.swing.JTextArea txtTranslated;
     // End of variables declaration//GEN-END:variables
-
-    
 }

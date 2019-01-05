@@ -29,6 +29,7 @@ public class Principal extends javax.swing.JFrame {
     Functions func;
     TableOfSimbols simbols;
     ResultSetTable rsTable;
+    BAScode BAScode;
 
     String lexico;
     public String code;
@@ -55,28 +56,37 @@ public class Principal extends javax.swing.JFrame {
         func = new Functions(this);
         simbols = new TableOfSimbols(this);
         rsTable = new ResultSetTable(this);
+        BAScode = new BAScode(this);
         txtPanCode.requestFocus();
     }
 
     private void Compile() {
         ClearOutput();
         code = txtPanCode.getText();
-        lexico = lexer.compile(code);
-        txtPanResul.setText(lexico);
-        rsTable.showTable();
-        object.clear();
-        if (FinishLexer) {
-            this.setVisible(false);
-            rsTable.setVisible(true);
-            sintax.compile(code);
-            if (FinishSintax) {
-                translate.compile(code);
+        if (code.length()>0) {
+            lexico = lexer.compile(code);
+            txtPanResul.setText(lexico);
+            rsTable.showTable();
+            object.clear();
+            if (FinishLexer) {
+                if (!rsTable.isVisible()) {
+                    rsTable.setVisible(true);
+                }
+                sintax.compile(code);
+                if (FinishSintax) {
+                    translate.compile(code);
+                    BAScode.setText(bas);
+                    if (!BAScode.isVisible()) {
+                        BAScode.setVisible(true);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Análisis Sintatico Semantico incorrecto lml");
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "Análisis Sintatico Semantico incorrecto lml");
+                JOptionPane.showMessageDialog(null, "Análisis Lexico erroneo");
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Análisis Lexico erroneo");
         }
+        
     }
 
     private void ClearOutput() {
@@ -362,12 +372,11 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOpenActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        SaveCurrentCode();
+        if(txtPanCode.getText().length()>0) SaveCurrentCode();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAboutActionPerformed
-        about.setVisible(true);
-        this.setVisible(false);
+        if(!about.isVisible()) about.setVisible(true);
     }//GEN-LAST:event_btnAboutActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -391,8 +400,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void btnTableofSimbolsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTableofSimbolsActionPerformed
-        simbols.setVisible(true);
-        this.setVisible(false);
+        if(!simbols.isVisible()) simbols.setVisible(true);
     }//GEN-LAST:event_btnTableofSimbolsActionPerformed
 
     /**
