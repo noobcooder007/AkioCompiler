@@ -11,9 +11,12 @@ import clases.Sintax;
 import clases.Token;
 import clases.Translate;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -76,6 +79,11 @@ public class Principal extends javax.swing.JFrame {
                 if (FinishSintax) {
                     translate.compile(code);
                     BAScode.setText(bas);
+                    try {
+                        Runtime.getRuntime().exec("C:\\Windows\\System32\\cmd.exe /K start C:\\oldDOS\\DOSBox\\DOSBox.exe");
+                    } catch (IOException ex) {
+                        Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     if (!BAScode.isVisible()) {
                         BAScode.setVisible(true);
                     }

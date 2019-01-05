@@ -95,16 +95,13 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="3" rowCount="35">
+                  <Table columnCount="3" rowCount="32">
                     <Column editable="false" title="TOKEN" type="java.lang.Object">
                       <Data value="BEGIN"/>
                       <Data value="END"/>
                       <Data value="TEXT"/>
                       <Data value="INT"/>
                       <Data value="DOU"/>
-                      <Data value="BOL"/>
-                      <Data value="TRUE"/>
-                      <Data value="FALSE"/>
                       <Data value="PRINT"/>
                       <Data value="SCAN"/>
                       <Data value="IF"/>
@@ -134,9 +131,6 @@
                       <Data value=" [0-9]"/>
                     </Column>
                     <Column editable="false" title="LEXEMA" type="java.lang.Object">
-                      <Data value="PR"/>
-                      <Data value="PR"/>
-                      <Data value="PR"/>
                       <Data value="PR"/>
                       <Data value="PR"/>
                       <Data value="PR"/>
@@ -186,9 +180,6 @@
                       <Data value="PR13"/>
                       <Data value="PR14"/>
                       <Data value="PR15"/>
-                      <Data value="PR16"/>
-                      <Data value="PR17"/>
-                      <Data value="PR18"/>
                       <Data value="OR01"/>
                       <Data value="OR02"/>
                       <Data value="OA01"/>
