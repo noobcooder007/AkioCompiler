@@ -5,7 +5,15 @@
  */
 package vistas;
 
+import java.awt.HeadlessException;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -13,20 +21,17 @@ import javax.swing.ImageIcon;
  */
 public class BAScode extends javax.swing.JFrame {
 
-    Principal principal;
+    private JFileChooser accion = null;
+    private File archivo = null;
+    public static String ruta = "";
 
     /**
      * Creates new form BAScode
      */
-    public BAScode(Principal principal) {
+    public BAScode() {
         initComponents();
-        this.principal = principal;
         this.setLocationRelativeTo(null);
         this.setIconImage(new ImageIcon(getClass().getResource("/icons/akio_icon.png")).getImage());
-    }
-
-    private BAScode() {
-        
     }
     
     private void Exit() {
@@ -133,9 +138,47 @@ public class BAScode extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        if (GuardarFichero(txtTranslated.getText(), "")==200) JOptionPane.showMessageDialog(null, "Archivo bas guardado correctamente");
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    public int GuardarFichero(String SCadena, String nombre) {
+        accion = new JFileChooser();
+        accion.setFileSelectionMode(0);
+        accion.setCurrentDirectory(new File("C:\\oldDOS\\QB45\\"));
+        FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("BAS", "bas");
+        accion.setFileFilter(filtroImagen);
+        accion.setDialogTitle("Guardar archivo " + nombre);
+        accion.setSelectedFile(new File(nombre));
+        if (accion.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            ruta = accion.getSelectedFile().toString();
+            if (!ruta.endsWith(".bas")) ruta+=".bas";
+            archivo = new File(ruta);
+            try {
+                //Si Existe el fichero lo borra
+                if (archivo.exists()) {
+                    if (JOptionPane.showConfirmDialog(null, "Se sobreescribira el archivo") == JOptionPane.YES_OPTION) {
+                        archivo.delete();
+                        archivo = new File(ruta);
+                    } else {
+                        archivo = new File(ruta.substring(0, ruta.length() - 3) + " - copia.bas");
+                    }
+                }
+                BufferedWriter wr = new BufferedWriter(new FileWriter(archivo));
+                FileWriter escribirArchivo = new FileWriter(archivo, true);
+                BufferedWriter buffer = new BufferedWriter(escribirArchivo);
+                buffer.write(SCadena);
+                //buffer.newLine();
+                buffer.close();
+                wr.close();
+                escribirArchivo.close();
+            } catch (HeadlessException | IOException ex) {
+            }
+            return 200;
+        } else {
+            return 0;
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */

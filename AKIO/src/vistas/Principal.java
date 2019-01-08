@@ -59,7 +59,7 @@ public class Principal extends javax.swing.JFrame {
         func = new Functions(this);
         simbols = new TableOfSimbols(this);
         rsTable = new ResultSetTable(this);
-        BAScode = new BAScode(this);
+        BAScode = new BAScode();
         txtPanCode.requestFocus();
     }
 
