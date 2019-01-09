@@ -59,6 +59,7 @@ public class Lexer {
                     linePunts = lineChars + 3;
                     lineChars = m.end() + 2;
                     chars = lineChars - linePunts;
+                    saltos++;
                 } else {
                     chars = m.start() - lineChars;
                 }
@@ -72,6 +73,7 @@ public class Lexer {
                     linePunts = lineChars + 3;
                     lineChars = m.end() + 2;
                     chars = lineChars - linePunts;
+                    saltos++;
                 } else {
                     chars = m.start() - lineChars;
                 }
