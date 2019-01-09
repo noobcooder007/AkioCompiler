@@ -198,12 +198,6 @@ public class Sintax {
                                         errores = 1;
                                         break;
                                     }
-                                    if (tok.matches(text)); else {
-                                            JOptionPane.showMessageDialog(null, "Tipos Incompatibles (" + tok + ") " + i + ": \n"
-                                                    + "________________________________________________________________________\n" + token);
-                                            errores = 1;
-                                            break;
-                                        }
                                 }
                             }
                         } else {
@@ -225,13 +219,7 @@ public class Sintax {
                                                     + "________________________________________________________________________\n" + token);
                                             errores = 1;
                                             break;
-                                        }
-                                        if (tok.matches(text)); else {
-                                            JOptionPane.showMessageDialog(null, "Tipos Incompatibles (" + tok + ") " + i + ": \n"
-                                                    + "________________________________________________________________________\n" + token);
-                                            errores = 1;
-                                            break;
-                                        }
+                                        }                                        
                                     }
                                 }
                             } else {
